@@ -155,18 +155,24 @@
     --letter-spacing-md: 0.13em;
 
     /* Font families */
-    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body--family: 'Moderat Serif';
     --font-body--style: {{ settings.type_body_font.style }};
-    --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
+    --font-body--weight: 400;
+    --font-subheading--family: 'Stabil Grotesk Regular;
     --font-subheading--style: {{ settings.type_subheading_font.style }};
-    --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-subheading--weight: 500;
+    --font-heading--family: 'Moderat Serif Regular';
     --font-heading--style: {{ settings.type_heading_font.style }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
+    --font-heading--weight: 400;
     --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
     --font-accent--style: {{ settings.type_accent_font.style }};
     --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-heading-secondary--family: 'Stabil Grotesk Regular';
+    --font-heading-secondary--weight: 500;
+    --font-heading-secondary-strong--family: 'Stabil Grotesk Bold';
+    --font-heading-secondary-strong--weight: 700;
+    --font-labels--family: 'Uniforma Semibold';
+    --font-labels--weight: 700;
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;
@@ -591,8 +597,8 @@
     --button-padding-block: 16px;
 
     /* Button font-family */
-    --button-font-family-primary: var(--font-{{ settings.type_font_button_primary }}--family);
-    --button-font-family-secondary: var(--font-{{ settings.type_font_button_secondary }}--family);
+    --button-font-family-primary: var(--font-labels--family);
+    --button-font-family-secondary: var(--font-labels--family);
 
     /* Button text case */
     --button-text-case: {{ settings.button_text_case }};
