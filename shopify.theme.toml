@@ -1,0 +1,8 @@
+[environments.default]
+store = "behumann.myshopify.com"
+ignore = [
+  "templates/*.json",
+  "sections/*.json",
+  "config/*.json"
+]
+open = true
