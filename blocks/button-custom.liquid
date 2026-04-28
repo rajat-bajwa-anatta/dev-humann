@@ -1,211 +1,98 @@
 {%- liquid
-  case block.settings.style_desktop
-    when 'primary'
-      assign style_bg_dt = 'var(--color-brand-red)'
-      assign style_fg_dt = 'var(--color-neutral-white)'
-      assign style_border_dt = 'var(--color-brand-red)'
-    when 'secondary'
-      assign style_bg_dt = 'var(--color-neutral-black)'
-      assign style_fg_dt = 'var(--color-neutral-white)'
-      assign style_border_dt = 'var(--color-neutral-black)'
-    when 'tertiary'
-      assign style_bg_dt = 'var(--color-neutral-100)'
-      assign style_fg_dt = 'var(--color-neutral-900)'
-      assign style_border_dt = 'var(--color-neutral-700)'
-    when 'inverse'
-      assign style_bg_dt = 'var(--color-neutral-white)'
-      assign style_fg_dt = 'var(--color-neutral-black)'
-      assign style_border_dt = 'var(--color-neutral-white)'
-    when 'base'
-      assign style_bg_dt = 'var(--color-neutral-100)'
-      assign style_fg_dt = 'var(--color-neutral-700)'
-      assign style_border_dt = 'transparent'
-  endcase
-
-
-  case block.settings.type_desktop
-    when 'solid'
-      assign btn_bg_dt = style_bg_dt
-      assign btn_fg_dt = style_fg_dt
-      assign btn_border_dt = style_border_dt
-      assign btn_decoration_dt = 'none'
-    when 'outline'
-      assign btn_bg_dt = 'transparent'
-      assign btn_fg_dt = style_bg_dt
-      assign btn_border_dt = style_border_dt
-      assign btn_decoration_dt = 'none'
-    when 'text'
-      assign btn_bg_dt = 'transparent'
-      assign btn_fg_dt = style_bg_dt
-      assign btn_border_dt = 'transparent'
-      assign btn_decoration_dt = 'underline'
-  endcase
-
-  # Size (desktop)
-  case block.settings.size_desktop
-    when 'large'
-      assign btn_padding_dt = '16px 32px'
-      assign btn_font_size_dt = '16px'
-    when 'small'
-      assign btn_padding_dt = '8px 16px'
-      assign btn_font_size_dt = '14px'
-    else
-      assign btn_padding_dt = '12px 24px'
-      assign btn_font_size_dt = '16px'
-  endcase
-
-  # Width (desktop)
-  case block.settings.width_desktop
-    when 'full'
-      assign btn_width_dt = '100%'
-    when 'custom'
-      assign btn_width_dt = block.settings.custom_width_desktop | append: 'px'
-    else
-      assign btn_width_dt = 'fit-content'
-  endcase
-
   # ----------------------------------------------------------------------
-  # Mobile resolution (mirrors the desktop logic above)
+  # Normalize setting values to class names.
+  # Handles legacy saved values (e.g. "large", "auto", "primary") from
+  # before the schema's options were switched to class-as-value. New values
+  # already start with "btn--" and pass through untouched.
   # ----------------------------------------------------------------------
-  case block.settings.style_mobile
-    when 'primary'
-      assign style_bg_mb = 'var(--color-brand-red)'
-      assign style_fg_mb = 'var(--color-neutral-white)'
-      assign style_border_mb = 'var(--color-brand-red)'
-    when 'secondary'
-      assign style_bg_mb = 'var(--color-neutral-black)'
-      assign style_fg_mb = 'var(--color-neutral-white)'
-      assign style_border_mb = 'var(--color-neutral-black)'
-    when 'tertiary'
-      assign style_bg_mb = 'var(--color-neutral-100)'
-      assign style_fg_mb = 'var(--color-neutral-900)'
-      assign style_border_mb = 'var(--color-neutral-700)'
-    when 'inverse'
-      assign style_bg_mb = 'var(--color-neutral-white)'
-      assign style_fg_mb = 'var(--color-neutral-black)'
-      assign style_border_mb = 'var(--color-neutral-white)'
-    when 'base'
-      assign style_bg_mb = 'var(--color-neutral-100)'
-      assign style_fg_mb = 'var(--color-neutral-700)'
-      assign style_border_mb = 'transparent'
-  endcase
+  assign type_desktop_class = block.settings.type_desktop
+  unless type_desktop_class contains 'btn--'
+    assign type_desktop_class = 'btn--' | append: type_desktop_class
+  endunless
 
-  case block.settings.type_mobile
-    when 'solid'
-      assign btn_bg_mb = style_bg_mb
-      assign btn_fg_mb = style_fg_mb
-      assign btn_border_mb = style_border_mb
-      assign btn_decoration_mb = 'none'
-    when 'outline'
-      assign btn_bg_mb = 'transparent'
-      assign btn_fg_mb = style_bg_mb
-      assign btn_border_mb = style_border_mb
-      assign btn_decoration_mb = 'none'
-    when 'text'
-      assign btn_bg_mb = 'transparent'
-      assign btn_fg_mb = style_bg_mb
-      assign btn_border_mb = 'transparent'
-      assign btn_decoration_mb = 'underline'
-  endcase
+  assign style_desktop_class = block.settings.style_desktop
+  unless style_desktop_class contains 'btn--'
+    assign style_desktop_class = 'btn--' | append: style_desktop_class
+  endunless
 
-  case block.settings.size_mobile
-    when 'large'
-      assign btn_padding_mb = '14px 28px'
-      assign btn_font_size_mb = '16px'
-    when 'small'
-      assign btn_padding_mb = '6px 14px'
-      assign btn_font_size_mb = '12px'
-    else
-      assign btn_padding_mb = '10px 20px'
-      assign btn_font_size_mb = '14px'
-  endcase
+  assign button_size_class = block.settings.button_size
+  unless button_size_class contains 'btn--'
+    assign button_size_class = 'btn--' | append: button_size_class
+  endunless
 
-  case block.settings.width_mobile
-    when 'full'
-      assign btn_width_mb = '100%'
-    when 'custom'
-      assign btn_width_mb = block.settings.custom_width_mobile | append: 'px'
-    else
-      assign btn_width_mb = 'fit-content'
-  endcase
+  assign width_desktop_class = block.settings.width_desktop
+  unless width_desktop_class contains 'btn--'
+    case width_desktop_class
+      when 'full'
+        assign width_desktop_class = 'btn--w-full'
+      when 'custom'
+        assign width_desktop_class = 'btn--w-custom'
+      else
+        assign width_desktop_class = 'btn--w-auto'
+    endcase
+  endunless
 
-  # ----------------------------------------------------------------------
-  # Color overrides — applied to both breakpoints when set.
-  # background_color only applies when type is 'solid' (outline/text are transparent).
-  # ----------------------------------------------------------------------
-  if block.settings.text_color != blank
-    assign btn_fg_dt = block.settings.text_color
-    assign btn_fg_mb = block.settings.text_color
+  assign type_mobile_class = block.settings.type_mobile
+  unless type_mobile_class contains 'btn--'
+    assign type_mobile_class = 'btn--' | append: type_mobile_class | append: '--mobile'
+  endunless
+
+  assign style_mobile_class = block.settings.style_mobile
+  unless style_mobile_class contains 'btn--'
+    assign style_mobile_class = 'btn--' | append: style_mobile_class | append: '--mobile'
+  endunless
+
+  assign width_mobile_class = block.settings.width_mobile
+  unless width_mobile_class contains 'btn--'
+    case width_mobile_class
+      when 'full'
+        assign width_mobile_class = 'btn--w-full--mobile'
+      when 'custom'
+        assign width_mobile_class = 'btn--w-custom--mobile'
+      else
+        assign width_mobile_class = 'btn--w-auto--mobile'
+    endcase
+  endunless
+
+  if width_desktop_class == 'btn--w-custom'
+    assign custom_w_md = block.settings.custom_width_desktop | append: 'px'
   endif
-  if block.settings.background_color != blank
-    if block.settings.type_desktop == 'solid'
-      assign btn_bg_dt = block.settings.background_color
-    endif
-    if block.settings.type_mobile == 'solid'
-      assign btn_bg_mb = block.settings.background_color
-    endif
+  if width_mobile_class == 'btn--w-custom--mobile'
+    assign custom_w_sm = block.settings.custom_width_mobile | append: 'px'
   endif
 -%}
 
+{%- capture inline_style -%}
+  {%- if block.settings.text_color != blank %}--btn-fg-override: {{ block.settings.text_color }};{% endif -%}
+  {%- if block.settings.background_color != blank %}--btn-bg-override: {{ block.settings.background_color }};{% endif -%}
+  {%- if custom_w_md %}--btn-w-custom-md: {{ custom_w_md }};{% endif -%}
+  {%- if custom_w_sm %}--btn-w-custom-sm: {{ custom_w_sm }};{% endif -%}
+{%- endcapture -%}
+{%- assign inline_style = inline_style | strip -%}
+
 <a
   href="{{ block.settings.link | default: '#' }}"
-  class="btn"
-  {%- if block.settings.open_in_new_tab %} target="_blank" rel="noopener"{% endif %}
-  style="
-    --btn-bg-mb: {{ btn_bg_mb }};
-    --btn-fg-mb: {{ btn_fg_mb }};
-    --btn-border-color-mb: {{ btn_border_mb }};
-    --btn-text-decoration-mb: {{ btn_decoration_mb }};
-    --btn-padding-mb: {{ btn_padding_mb }};
-    --btn-font-size-mb: {{ btn_font_size_mb }};
-    --btn-width-mb: {{ btn_width_mb }};
-    --btn-bg-dt: {{ btn_bg_dt }};
-    --btn-fg-dt: {{ btn_fg_dt }};
-    --btn-border-color-dt: {{ btn_border_dt }};
-    --btn-text-decoration-dt: {{ btn_decoration_dt }};
-    --btn-padding-dt: {{ btn_padding_dt }};
-    --btn-font-size-dt: {{ btn_font_size_dt }};
-    --btn-width-dt: {{ btn_width_dt }};
-  "
+  class="btn {{ type_desktop_class }} {{ style_desktop_class }} {{ button_size_class }} {{ width_desktop_class }} {{ type_mobile_class }} {{ style_mobile_class }} {{ width_mobile_class }}"
+  {%- if block.settings.open_in_new_tab %} target="_blank" rel="noopener"{% endif -%}
+  {%- if inline_style != '' %} style="{{ inline_style }}"{% endif -%}
   {{ block.shopify_attributes }}
 >
   {{ block.settings.label | default: 'Button' }}
 </a>
 
 {% stylesheet %}
-  /* Custom Button — single class, mobile-first, desktop overrides via media query.
-     All visual values are read from inline custom properties set on the element. */
-  .btn {
-    /* Mobile defaults pulled from inline custom properties */
-    --btn-bg: var(--btn-bg-mb, transparent);
-    --btn-fg: var(--btn-fg-mb, currentColor);
-    --btn-border-color: var(--btn-border-color-mb, transparent);
-    --btn-padding: var(--btn-padding-mb, 10px 20px);
-    --btn-font-size: var(--btn-font-size-mb, 0.875rem);
-    --btn-width: var(--btn-width-mb, fit-content);
-    --btn-text-decoration: var(--btn-text-decoration-mb, none);
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-transform:uppercase;
-    gap: 0.5rem;
-    box-sizing: border-box;
-    width: var(--btn-width);
+  .btn {
     max-width: 100%;
-    padding: var(--btn-padding);
-    background: var(--btn-bg);
-    color: var(--btn-fg);
-    border: 1px solid var(--btn-border-color);
+    border: 1px solid transparent;
     border-radius: 999px;
     font-family: var(--font-label--family, inherit);
     font-weight: var(--font-label--weight, 600);
-    font-size: var(--btn-font-size);
-    line-height: 1.2;
+    line-height: 16px;
     letter-spacing: var(--letter-spacing-loose, 0.75px);
     text-align: center;
-    text-decoration: var(--btn-text-decoration);
-    text-underline-offset: 0.2em;
+    text-decoration: none;
+    text-transform: uppercase;
     cursor: pointer;
     transition:
       background-color 150ms ease,
@@ -214,29 +101,114 @@
       opacity 150ms ease;
   }
 
-  @media screen and (min-width: 768px) {
-    .btn {
-      --btn-bg: var(--btn-bg-dt, transparent);
-      --btn-fg: var(--btn-fg-dt, currentColor);
-      --btn-border-color: var(--btn-border-color-dt, transparent);
-      --btn-padding: var(--btn-padding-dt, 12px 24px);
-      --btn-font-size: var(--btn-font-size-dt, 1rem);
-      --btn-width: var(--btn-width-dt, fit-content);
-      --btn-text-decoration: var(--btn-text-decoration-dt, none);
-    }
-  }
-
-  .btn:hover {
-    opacity: 0.85;
-  }
-
-  .btn:active {
-    opacity: 0.7;
-  }
-
   .btn:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 2px;
+  }
+
+    /* --- Size --- */
+  .btn--large  { padding: 16px 28px; font-size: 16px; }
+  .btn--medium { padding: 12px 20px; font-size: 16px; }
+  .btn--small  { padding: 8px 16px;  font-size: 14px; }
+
+  /* --- Width --- */
+  .btn--w-full   { width: 100%; }
+  .btn--w-auto   { width: fit-content; }
+  .btn--w-custom { width: var(--btn-w-custom-md, 200px); }
+
+  @media screen and (min-width: 750px) {
+    /* --- Style: signature colors, with override hooks --- */
+    .btn--primary {
+      background-color: var(--btn-bg-override, var(--color-brand-red));
+      color: var(--btn-fg-override, var(--color-neutral-white));
+      border-color: var(--color-brand-red);
+      --btn-outline-fg: var(--color-brand-red);
+    }
+    .btn--secondary {
+      background-color: var(--btn-bg-override, var(--color-neutral-black));
+      color: var(--btn-fg-override, var(--color-neutral-white));
+      border-color: var(--color-neutral-black);
+      --btn-outline-fg: var(--color-neutral-black);
+    }
+    .btn--tertiary {
+      background-color: var(--btn-bg-override, var(--color-neutral-100));
+      color: var(--btn-fg-override, var(--color-neutral-900));
+      border-color: var(--color-neutral-700);
+      --btn-outline-fg: var(--color-neutral-900);
+    }
+    .btn--inverse {
+      background-color: var(--btn-bg-override, var(--color-neutral-white));
+      color: var(--btn-fg-override, var(--color-neutral-black));
+      border-color: var(--color-neutral-white);
+      --btn-outline-fg: var(--color-neutral-white);
+    }
+    .btn--base {
+      background-color: var(--btn-bg-override, var(--color-neutral-100));
+      color: var(--btn-fg-override, var(--color-neutral-700));
+      border-color: transparent;
+      --btn-outline-fg: var(--color-neutral-700);
+    }
+
+    /* --- Type --- */
+
+    .btn--outline {
+      background-color: transparent;
+      color: var(--btn-fg-override, var(--btn-outline-fg));
+    }
+    .btn--text {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--btn-fg-override, var(--btn-outline-fg));
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    /* --- Style --- */
+    .btn--primary--mobile {
+      background-color: var(--btn-bg-override, var(--color-brand-red));
+      color: var(--btn-fg-override, var(--color-neutral-white));
+      border-color: var(--color-brand-red);
+      --btn-outline-fg: var(--color-brand-red);
+    }
+    .btn--secondary--mobile {
+      background-color: var(--btn-bg-override, var(--color-neutral-black));
+      color: var(--btn-fg-override, var(--color-neutral-white));
+      border-color: var(--color-neutral-black);
+      --btn-outline-fg: var(--color-neutral-black);
+    }
+    .btn--tertiary--mobile {
+      background-color: var(--btn-bg-override, var(--color-neutral-100));
+      color: var(--btn-fg-override, var(--color-neutral-900));
+      border-color: var(--color-neutral-700);
+      --btn-outline-fg: var(--color-neutral-900);
+    }
+    .btn--inverse--mobile {
+      background-color: var(--btn-bg-override, var(--color-neutral-white));
+      color: var(--btn-fg-override, var(--color-neutral-black));
+      border-color: var(--color-neutral-white);
+      --btn-outline-fg: var(--color-neutral-white);
+    }
+    .btn--base--mobile {
+      background-color: var(--btn-bg-override, var(--color-neutral-100));
+      color: var(--btn-fg-override, var(--color-neutral-700));
+      border-color: transparent;
+      --btn-outline-fg: var(--color-neutral-700);
+    }
+
+    .btn--outline--mobile {
+      background-color: transparent;
+      color: var(--btn-fg-override, var(--btn-outline-fg));
+    }
+    .btn--text--mobile {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--btn-fg-override, var(--btn-outline-fg));
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
   }
 {% endstylesheet %}
 
@@ -266,6 +238,17 @@
       "default": false
     },
     {
+      "type": "select",
+      "id": "button_size",
+      "label": "Size",
+      "default": "btn--medium",
+      "options": [
+        { "value": "btn--large",  "label": "Large" },
+        { "value": "btn--medium", "label": "Medium" },
+        { "value": "btn--small",  "label": "Small" }
+      ]
+    },
+    {
       "type": "header",
       "content": "Desktop"
     },
@@ -273,46 +256,35 @@
       "type": "select",
       "id": "type_desktop",
       "label": "Type",
-      "default": "solid",
+      "default": "btn--solid",
       "options": [
-        { "value": "solid", "label": "Solid" },
-        { "value": "outline", "label": "Outline" },
-        { "value": "text", "label": "Text" }
+        { "value": "btn--solid",   "label": "Solid" },
+        { "value": "btn--outline", "label": "Outline" },
+        { "value": "btn--text",    "label": "Text" }
       ]
     },
     {
       "type": "select",
       "id": "style_desktop",
       "label": "Style",
-      "default": "primary",
+      "default": "btn--primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "tertiary", "label": "Tertiary" },
-        { "value": "inverse", "label": "Inverse" },
-        { "value": "base", "label": "Base" }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "size_desktop",
-      "label": "Size",
-      "default": "medium",
-      "options": [
-        { "value": "large", "label": "Large" },
-        { "value": "medium", "label": "Medium" },
-        { "value": "small", "label": "Small" }
+        { "value": "btn--primary",   "label": "Primary" },
+        { "value": "btn--secondary", "label": "Secondary" },
+        { "value": "btn--tertiary",  "label": "Tertiary" },
+        { "value": "btn--inverse",   "label": "Inverse" },
+        { "value": "btn--base",      "label": "Base" }
       ]
     },
     {
       "type": "select",
       "id": "width_desktop",
       "label": "Width",
-      "default": "auto",
+      "default": "btn--w-auto",
       "options": [
-        { "value": "full", "label": "Full width (100%)" },
-        { "value": "auto", "label": "Auto" },
-        { "value": "custom", "label": "Custom (px)" }
+        { "value": "btn--w-full",   "label": "Full width (100%)" },
+        { "value": "btn--w-auto",   "label": "Auto" },
+        { "value": "btn--w-custom", "label": "Custom (px)" }
       ]
     },
     {
@@ -324,8 +296,9 @@
       "step": 10,
       "unit": "px",
       "default": 200,
-      "visible_if": "{{ block.settings.width_desktop == 'custom' }}"
+      "visible_if": "{{ block.settings.width_desktop == 'btn--w-custom' }}"
     },
+    
     {
       "type": "header",
       "content": "Mobile"
@@ -334,46 +307,35 @@
       "type": "select",
       "id": "type_mobile",
       "label": "Type",
-      "default": "solid",
+      "default": "btn--solid--mobile",
       "options": [
-        { "value": "solid", "label": "Solid" },
-        { "value": "outline", "label": "Outline" },
-        { "value": "text", "label": "Text" }
+        { "value": "btn--solid--mobile",   "label": "Solid" },
+        { "value": "btn--outline--mobile", "label": "Outline" },
+        { "value": "btn--text--mobile",    "label": "Text" }
       ]
     },
     {
       "type": "select",
       "id": "style_mobile",
       "label": "Style",
-      "default": "primary",
+      "default": "btn--primary--mobile",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "tertiary", "label": "Tertiary" },
-        { "value": "inverse", "label": "Inverse" },
-        { "value": "base", "label": "Base" }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "size_mobile",
-      "label": "Size",
-      "default": "small",
-      "options": [
-        { "value": "large", "label": "Large" },
-        { "value": "medium", "label": "Medium" },
-        { "value": "small", "label": "Small" }
+        { "value": "btn--primary--mobile",   "label": "Primary" },
+        { "value": "btn--secondary--mobile", "label": "Secondary" },
+        { "value": "btn--tertiary--mobile",  "label": "Tertiary" },
+        { "value": "btn--inverse--mobile",   "label": "Inverse" },
+        { "value": "btn--base--mobile",      "label": "Base" }
       ]
     },
     {
       "type": "select",
       "id": "width_mobile",
       "label": "Width",
-      "default": "auto",
+      "default": "btn--w-auto--mobile",
       "options": [
-        { "value": "full", "label": "Full width (100%)" },
-        { "value": "auto", "label": "Auto" },
-        { "value": "custom", "label": "Custom (px)" }
+        { "value": "btn--w-full--mobile",   "label": "Full width (100%)" },
+        { "value": "btn--w-auto--mobile",   "label": "Auto" },
+        { "value": "btn--w-custom--mobile", "label": "Custom (px)" }
       ]
     },
     {
@@ -385,7 +347,7 @@
       "step": 10,
       "unit": "px",
       "default": 160,
-      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+      "visible_if": "{{ block.settings.width_mobile == 'btn--w-custom--mobile' }}"
     },
     {
       "type": "header",
@@ -401,7 +363,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Background color",
-      "info": "Applies to Solid type only. Leave empty to use the selected style's default."
+      "info": "Applies to Solid type only — Outline and Text are always transparent. Leave empty to use the selected style's default."
     }
   ],
   "presets": [
