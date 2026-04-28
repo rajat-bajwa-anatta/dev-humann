@@ -1,0 +1,418 @@
+{%- liquid
+  case block.settings.style_desktop
+    when 'primary'
+      assign style_bg_dt = 'var(--color-brand-red)'
+      assign style_fg_dt = 'var(--color-neutral-white)'
+      assign style_border_dt = 'var(--color-brand-red)'
+    when 'secondary'
+      assign style_bg_dt = 'var(--color-neutral-black)'
+      assign style_fg_dt = 'var(--color-neutral-white)'
+      assign style_border_dt = 'var(--color-neutral-black)'
+    when 'tertiary'
+      assign style_bg_dt = 'var(--color-neutral-100)'
+      assign style_fg_dt = 'var(--color-neutral-900)'
+      assign style_border_dt = 'var(--color-neutral-700)'
+    when 'inverse'
+      assign style_bg_dt = 'var(--color-neutral-white)'
+      assign style_fg_dt = 'var(--color-neutral-black)'
+      assign style_border_dt = 'var(--color-neutral-white)'
+    when 'base'
+      assign style_bg_dt = 'var(--color-neutral-100)'
+      assign style_fg_dt = 'var(--color-neutral-700)'
+      assign style_border_dt = 'transparent'
+  endcase
+
+
+  case block.settings.type_desktop
+    when 'solid'
+      assign btn_bg_dt = style_bg_dt
+      assign btn_fg_dt = style_fg_dt
+      assign btn_border_dt = style_border_dt
+      assign btn_decoration_dt = 'none'
+    when 'outline'
+      assign btn_bg_dt = 'transparent'
+      assign btn_fg_dt = style_bg_dt
+      assign btn_border_dt = style_border_dt
+      assign btn_decoration_dt = 'none'
+    when 'text'
+      assign btn_bg_dt = 'transparent'
+      assign btn_fg_dt = style_bg_dt
+      assign btn_border_dt = 'transparent'
+      assign btn_decoration_dt = 'underline'
+  endcase
+
+  # Size (desktop)
+  case block.settings.size_desktop
+    when 'large'
+      assign btn_padding_dt = '16px 32px'
+      assign btn_font_size_dt = '16px'
+    when 'small'
+      assign btn_padding_dt = '8px 16px'
+      assign btn_font_size_dt = '14px'
+    else
+      assign btn_padding_dt = '12px 24px'
+      assign btn_font_size_dt = '16px'
+  endcase
+
+  # Width (desktop)
+  case block.settings.width_desktop
+    when 'full'
+      assign btn_width_dt = '100%'
+    when 'custom'
+      assign btn_width_dt = block.settings.custom_width_desktop | append: 'px'
+    else
+      assign btn_width_dt = 'fit-content'
+  endcase
+
+  # ----------------------------------------------------------------------
+  # Mobile resolution (mirrors the desktop logic above)
+  # ----------------------------------------------------------------------
+  case block.settings.style_mobile
+    when 'primary'
+      assign style_bg_mb = 'var(--color-brand-red)'
+      assign style_fg_mb = 'var(--color-neutral-white)'
+      assign style_border_mb = 'var(--color-brand-red)'
+    when 'secondary'
+      assign style_bg_mb = 'var(--color-neutral-black)'
+      assign style_fg_mb = 'var(--color-neutral-white)'
+      assign style_border_mb = 'var(--color-neutral-black)'
+    when 'tertiary'
+      assign style_bg_mb = 'var(--color-neutral-100)'
+      assign style_fg_mb = 'var(--color-neutral-900)'
+      assign style_border_mb = 'var(--color-neutral-700)'
+    when 'inverse'
+      assign style_bg_mb = 'var(--color-neutral-white)'
+      assign style_fg_mb = 'var(--color-neutral-black)'
+      assign style_border_mb = 'var(--color-neutral-white)'
+    when 'base'
+      assign style_bg_mb = 'var(--color-neutral-100)'
+      assign style_fg_mb = 'var(--color-neutral-700)'
+      assign style_border_mb = 'transparent'
+  endcase
+
+  case block.settings.type_mobile
+    when 'solid'
+      assign btn_bg_mb = style_bg_mb
+      assign btn_fg_mb = style_fg_mb
+      assign btn_border_mb = style_border_mb
+      assign btn_decoration_mb = 'none'
+    when 'outline'
+      assign btn_bg_mb = 'transparent'
+      assign btn_fg_mb = style_bg_mb
+      assign btn_border_mb = style_border_mb
+      assign btn_decoration_mb = 'none'
+    when 'text'
+      assign btn_bg_mb = 'transparent'
+      assign btn_fg_mb = style_bg_mb
+      assign btn_border_mb = 'transparent'
+      assign btn_decoration_mb = 'underline'
+  endcase
+
+  case block.settings.size_mobile
+    when 'large'
+      assign btn_padding_mb = '14px 28px'
+      assign btn_font_size_mb = '16px'
+    when 'small'
+      assign btn_padding_mb = '6px 14px'
+      assign btn_font_size_mb = '12px'
+    else
+      assign btn_padding_mb = '10px 20px'
+      assign btn_font_size_mb = '14px'
+  endcase
+
+  case block.settings.width_mobile
+    when 'full'
+      assign btn_width_mb = '100%'
+    when 'custom'
+      assign btn_width_mb = block.settings.custom_width_mobile | append: 'px'
+    else
+      assign btn_width_mb = 'fit-content'
+  endcase
+
+  # ----------------------------------------------------------------------
+  # Color overrides — applied to both breakpoints when set.
+  # background_color only applies when type is 'solid' (outline/text are transparent).
+  # ----------------------------------------------------------------------
+  if block.settings.text_color != blank
+    assign btn_fg_dt = block.settings.text_color
+    assign btn_fg_mb = block.settings.text_color
+  endif
+  if block.settings.background_color != blank
+    if block.settings.type_desktop == 'solid'
+      assign btn_bg_dt = block.settings.background_color
+    endif
+    if block.settings.type_mobile == 'solid'
+      assign btn_bg_mb = block.settings.background_color
+    endif
+  endif
+-%}
+
+<a
+  href="{{ block.settings.link | default: '#' }}"
+  class="btn"
+  {%- if block.settings.open_in_new_tab %} target="_blank" rel="noopener"{% endif %}
+  style="
+    --btn-bg-mb: {{ btn_bg_mb }};
+    --btn-fg-mb: {{ btn_fg_mb }};
+    --btn-border-color-mb: {{ btn_border_mb }};
+    --btn-text-decoration-mb: {{ btn_decoration_mb }};
+    --btn-padding-mb: {{ btn_padding_mb }};
+    --btn-font-size-mb: {{ btn_font_size_mb }};
+    --btn-width-mb: {{ btn_width_mb }};
+    --btn-bg-dt: {{ btn_bg_dt }};
+    --btn-fg-dt: {{ btn_fg_dt }};
+    --btn-border-color-dt: {{ btn_border_dt }};
+    --btn-text-decoration-dt: {{ btn_decoration_dt }};
+    --btn-padding-dt: {{ btn_padding_dt }};
+    --btn-font-size-dt: {{ btn_font_size_dt }};
+    --btn-width-dt: {{ btn_width_dt }};
+  "
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.label | default: 'Button' }}
+</a>
+
+{% stylesheet %}
+  /* Custom Button — single class, mobile-first, desktop overrides via media query.
+     All visual values are read from inline custom properties set on the element. */
+  .btn {
+    /* Mobile defaults pulled from inline custom properties */
+    --btn-bg: var(--btn-bg-mb, transparent);
+    --btn-fg: var(--btn-fg-mb, currentColor);
+    --btn-border-color: var(--btn-border-color-mb, transparent);
+    --btn-padding: var(--btn-padding-mb, 10px 20px);
+    --btn-font-size: var(--btn-font-size-mb, 0.875rem);
+    --btn-width: var(--btn-width-mb, fit-content);
+    --btn-text-decoration: var(--btn-text-decoration-mb, none);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform:uppercase;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    width: var(--btn-width);
+    max-width: 100%;
+    padding: var(--btn-padding);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    border: 1px solid var(--btn-border-color);
+    border-radius: 999px;
+    font-family: var(--font-label--family, inherit);
+    font-weight: var(--font-label--weight, 600);
+    font-size: var(--btn-font-size);
+    line-height: 1.2;
+    letter-spacing: var(--letter-spacing-loose, 0.75px);
+    text-align: center;
+    text-decoration: var(--btn-text-decoration);
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      opacity 150ms ease;
+  }
+
+  @media screen and (min-width: 768px) {
+    .btn {
+      --btn-bg: var(--btn-bg-dt, transparent);
+      --btn-fg: var(--btn-fg-dt, currentColor);
+      --btn-border-color: var(--btn-border-color-dt, transparent);
+      --btn-padding: var(--btn-padding-dt, 12px 24px);
+      --btn-font-size: var(--btn-font-size-dt, 1rem);
+      --btn-width: var(--btn-width-dt, fit-content);
+      --btn-text-decoration: var(--btn-text-decoration-dt, none);
+    }
+  }
+
+  .btn:hover {
+    opacity: 0.85;
+  }
+
+  .btn:active {
+    opacity: 0.7;
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Custom Button",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "select",
+      "id": "type_desktop",
+      "label": "Type",
+      "default": "solid",
+      "options": [
+        { "value": "solid", "label": "Solid" },
+        { "value": "outline", "label": "Outline" },
+        { "value": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "style_desktop",
+      "label": "Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" },
+        { "value": "inverse", "label": "Inverse" },
+        { "value": "base", "label": "Base" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size_desktop",
+      "label": "Size",
+      "default": "medium",
+      "options": [
+        { "value": "large", "label": "Large" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "small", "label": "Small" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width_desktop",
+      "label": "Width",
+      "default": "auto",
+      "options": [
+        { "value": "full", "label": "Full width (100%)" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "custom", "label": "Custom (px)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "custom_width_desktop",
+      "label": "Custom width",
+      "min": 60,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 200,
+      "visible_if": "{{ block.settings.width_desktop == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "select",
+      "id": "type_mobile",
+      "label": "Type",
+      "default": "solid",
+      "options": [
+        { "value": "solid", "label": "Solid" },
+        { "value": "outline", "label": "Outline" },
+        { "value": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "style_mobile",
+      "label": "Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" },
+        { "value": "inverse", "label": "Inverse" },
+        { "value": "base", "label": "Base" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size_mobile",
+      "label": "Size",
+      "default": "small",
+      "options": [
+        { "value": "large", "label": "Large" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "small", "label": "Small" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "Width",
+      "default": "auto",
+      "options": [
+        { "value": "full", "label": "Full width (100%)" },
+        { "value": "auto", "label": "Auto" },
+        { "value": "custom", "label": "Custom (px)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "Custom width",
+      "min": 60,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 160,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "Color overrides"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "info": "Leave empty to use the selected style's default."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Applies to Solid type only. Leave empty to use the selected style's default."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Button",
+      "category": "t:categories.basic",
+      "settings": {
+        "label": "Shop now",
+        "link": "shopify://collections/all"
+      }
+    }
+  ]
+}
+{% endschema %}
