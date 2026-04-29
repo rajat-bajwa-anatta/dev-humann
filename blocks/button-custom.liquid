@@ -1,70 +1,24 @@
 {%- liquid
-  # ----------------------------------------------------------------------
-  # Normalize setting values to class names.
-  # Handles legacy saved values (e.g. "large", "auto", "primary") from
-  # before the schema's options were switched to class-as-value. New values
-  # already start with "btn--" and pass through untouched.
-  # ----------------------------------------------------------------------
-  assign type_desktop_class = block.settings.type_desktop
-  unless type_desktop_class contains 'btn--'
-    assign type_desktop_class = 'btn--' | append: type_desktop_class
-  endunless
-
-  assign style_desktop_class = block.settings.style_desktop
-  unless style_desktop_class contains 'btn--'
-    assign style_desktop_class = 'btn--' | append: style_desktop_class
-  endunless
 
   assign button_size_class = block.settings.button_size
-  unless button_size_class contains 'btn--'
-    assign button_size_class = 'btn--' | append: button_size_class
-  endunless
 
+  assign type_desktop_class = block.settings.type_desktop
+  assign style_desktop_class = block.settings.style_desktop
   assign width_desktop_class = block.settings.width_desktop
-  unless width_desktop_class contains 'btn--'
-    case width_desktop_class
-      when 'full'
-        assign width_desktop_class = 'btn--w-full'
-      when 'custom'
-        assign width_desktop_class = 'btn--w-custom'
-      else
-        assign width_desktop_class = 'btn--w-auto'
-    endcase
-  endunless
-
-  assign type_mobile_class = block.settings.type_mobile
-  unless type_mobile_class contains 'btn--'
-    assign type_mobile_class = 'btn--' | append: type_mobile_class | append: '--mobile'
-  endunless
-
-  assign style_mobile_class = block.settings.style_mobile
-  unless style_mobile_class contains 'btn--'
-    assign style_mobile_class = 'btn--' | append: style_mobile_class | append: '--mobile'
-  endunless
-
-  assign width_mobile_class = block.settings.width_mobile
-  unless width_mobile_class contains 'btn--'
-    case width_mobile_class
-      when 'full'
-        assign width_mobile_class = 'btn--w-full--mobile'
-      when 'custom'
-        assign width_mobile_class = 'btn--w-custom--mobile'
-      else
-        assign width_mobile_class = 'btn--w-auto--mobile'
-    endcase
-  endunless
-
   if width_desktop_class == 'btn--w-custom'
     assign custom_w_md = block.settings.custom_width_desktop | append: 'px'
   endif
+
+  assign type_mobile_class = block.settings.type_mobile
+  assign style_mobile_class = block.settings.style_mobile
+  assign width_mobile_class = block.settings.width_mobile
   if width_mobile_class == 'btn--w-custom--mobile'
     assign custom_w_sm = block.settings.custom_width_mobile | append: 'px'
   endif
+
 -%}
 
 {%- capture inline_style -%}
-  {%- if block.settings.text_color != blank %}--btn-fg-override: {{ block.settings.text_color }};{% endif -%}
-  {%- if block.settings.background_color != blank %}--btn-bg-override: {{ block.settings.background_color }};{% endif -%}
   {%- if custom_w_md %}--btn-w-custom-md: {{ custom_w_md }};{% endif -%}
   {%- if custom_w_sm %}--btn-w-custom-sm: {{ custom_w_sm }};{% endif -%}
 {%- endcapture -%}
@@ -83,11 +37,12 @@
 {% stylesheet %}
 
   .btn {
+    display: block;
     max-width: 100%;
     border: 1px solid transparent;
     border-radius: 999px;
-    font-family: var(--font-label--family, inherit);
-    font-weight: var(--font-label--weight, 600);
+    font-family: var(--font-labels--family, inherit);
+    font-weight: var(--font-labels--weight, 400);
     line-height: 16px;
     letter-spacing: var(--letter-spacing-loose, 0.75px);
     text-align: center;
@@ -119,32 +74,32 @@
   @media screen and (min-width: 750px) {
     /* --- Style: signature colors, with override hooks --- */
     .btn--primary {
-      background-color: var(--btn-bg-override, var(--color-brand-red));
-      color: var(--btn-fg-override, var(--color-neutral-white));
+      background-color: var(--color-brand-red);
+      color: var(--color-neutral-white);
       border-color: var(--color-brand-red);
       --btn-outline-fg: var(--color-brand-red);
     }
     .btn--secondary {
-      background-color: var(--btn-bg-override, var(--color-neutral-black));
-      color: var(--btn-fg-override, var(--color-neutral-white));
+      background-color: var(--color-neutral-black);
+      color: var(--color-neutral-white);
       border-color: var(--color-neutral-black);
       --btn-outline-fg: var(--color-neutral-black);
     }
     .btn--tertiary {
-      background-color: var(--btn-bg-override, var(--color-neutral-100));
-      color: var(--btn-fg-override, var(--color-neutral-900));
+      background-color: var(--color-neutral-100);
+      color: var(--color-neutral-900);
       border-color: var(--color-neutral-700);
       --btn-outline-fg: var(--color-neutral-900);
     }
     .btn--inverse {
-      background-color: var(--btn-bg-override, var(--color-neutral-white));
-      color: var(--btn-fg-override, var(--color-neutral-black));
+      background-color: var(--color-neutral-white);
+      color: var(--color-neutral-black);
       border-color: var(--color-neutral-white);
       --btn-outline-fg: var(--color-neutral-white);
     }
     .btn--base {
-      background-color: var(--btn-bg-override, var(--color-neutral-100));
-      color: var(--btn-fg-override, var(--color-neutral-700));
+      background-color: var(--color-neutral-100);
+      color: var(--color-neutral-700);
       border-color: transparent;
       --btn-outline-fg: var(--color-neutral-700);
     }
@@ -153,59 +108,59 @@
 
     .btn--outline {
       background-color: transparent;
-      color: var(--btn-fg-override, var(--btn-outline-fg));
+      color: var(--btn-outline-fg);
     }
     .btn--text {
       background-color: transparent;
       border-color: transparent;
-      color: var(--btn-fg-override, var(--btn-outline-fg));
+      color: var(--btn-outline-fg);
       text-decoration: underline;
       text-underline-offset: 0.2em;
     }
   }
 
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 749px) {
     /* --- Style --- */
     .btn--primary--mobile {
-      background-color: var(--btn-bg-override, var(--color-brand-red));
-      color: var(--btn-fg-override, var(--color-neutral-white));
+      background-color: var(--color-brand-red);
+      color: var(--color-neutral-white);
       border-color: var(--color-brand-red);
       --btn-outline-fg: var(--color-brand-red);
     }
     .btn--secondary--mobile {
-      background-color: var(--btn-bg-override, var(--color-neutral-black));
-      color: var(--btn-fg-override, var(--color-neutral-white));
+      background-color: var(--color-neutral-black);
+      color: var(--color-neutral-white);
       border-color: var(--color-neutral-black);
       --btn-outline-fg: var(--color-neutral-black);
     }
     .btn--tertiary--mobile {
-      background-color: var(--btn-bg-override, var(--color-neutral-100));
-      color: var(--btn-fg-override, var(--color-neutral-900));
+      background-color: var(--color-neutral-100);
+      color: var(--color-neutral-900);
       border-color: var(--color-neutral-700);
       --btn-outline-fg: var(--color-neutral-900);
     }
     .btn--inverse--mobile {
-      background-color: var(--btn-bg-override, var(--color-neutral-white));
-      color: var(--btn-fg-override, var(--color-neutral-black));
+      background-color: var(--color-neutral-white);
+      color: var(--color-neutral-black);
       border-color: var(--color-neutral-white);
       --btn-outline-fg: var(--color-neutral-white);
     }
     .btn--base--mobile {
-      background-color: var(--btn-bg-override, var(--color-neutral-100));
-      color: var(--btn-fg-override, var(--color-neutral-700));
+      background-color: var(--color-neutral-100);
+      color: var(--color-neutral-700);
       border-color: transparent;
       --btn-outline-fg: var(--color-neutral-700);
     }
 
     .btn--outline--mobile {
       background-color: transparent;
-      color: var(--btn-fg-override, var(--btn-outline-fg));
+      color: var(--btn-outline-fg);
     }
     .btn--text--mobile {
       background-color: transparent;
       border-color: transparent;
-      color: var(--btn-fg-override, var(--btn-outline-fg));
+      color: var(--btn-outline-fg);
       text-decoration: underline;
       text-underline-offset: 0.2em;
     }
@@ -348,22 +303,6 @@
       "unit": "px",
       "default": 160,
       "visible_if": "{{ block.settings.width_mobile == 'btn--w-custom--mobile' }}"
-    },
-    {
-      "type": "header",
-      "content": "Color overrides"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "info": "Leave empty to use the selected style's default."
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background color",
-      "info": "Applies to Solid type only — Outline and Text are always transparent. Leave empty to use the selected style's default."
     }
   ],
   "presets": [

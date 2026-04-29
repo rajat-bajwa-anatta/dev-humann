@@ -761,24 +761,21 @@ h1,
 .h1.h1,
 .text-block.h1 > *,
 .text-block.h1 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h1--family, var(--font-heading--family));
+  font-family: var(--font-h1--family);
   font-style: var(--font-h1--style);
-  font-weight: var(--font-h1--weight, var(--font-heading--weight));
-  font-size: var(--font-h1--size, var(--font-size-900));
-  line-height: var(--font-h1--line-height, var(--line-height-h1));
-  letter-spacing: var(
-    --font-h1--letter-spacing,
-    var(--letter-spacing-tightest)
-  );
+  font-weight: var(--font-h1--weight);
+  font-size: var(--font-h1--size);
+  line-height: var(--font-h1--line-height);
+  letter-spacing: var(--font-h1--letter-spacing);
   text-transform: var(--font-h1--case);
-  color: var(--color, var(--font-h1--color, var(--color-text-primary)));
+  color: var(--color, var(--font-h1-color));
 }
 
 @media screen and (max-width: 1200px) {
   input.h1.h1,
   textarea.h1.h1,
   select.h1.h1 {
-    font-size: max(1rem, var(--font-h1--size, var(--font-size-900)));
+    font-size: max(1rem, var(--font-h1--size));
   }
 }
 
@@ -786,24 +783,21 @@ h2,
 .h2.h2,
 .text-block.h2 > *,
 .text-block.h2 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h2--family, var(--font-heading--family));
+  font-family: var(--font-h2--family);
   font-style: var(--font-h2--style);
-  font-weight: var(--font-h2--weight, var(--font-heading--weight));
-  font-size: var(--font-h2--size, var(--font-size-800));
-  line-height: var(--font-h2--line-height, var(--line-height-h2));
-  letter-spacing: var(
-    --font-h2--letter-spacing,
-    var(--letter-spacing-tightest)
-  );
+  font-weight: var(--font-h2--weight);
+  font-size: var(--font-h2--size);
+  line-height: var(--font-h2--line-height);
+  letter-spacing: var(--font-h2--letter-spacing);
   text-transform: var(--font-h2--case);
-  color: var(--color, var(--font-h2--color, var(--color-text-primary)));
+  color: var(--color, var(--font-h2-color));
 }
 
 @media screen and (max-width: 1200px) {
   input.h2.h2,
   textarea.h2.h2,
   select.h2.h2 {
-    font-size: max(1rem, var(--font-h2--size, var(--font-size-800)));
+    font-size: max(1rem, var(--font-h2--size));
   }
 }
 
@@ -812,24 +806,21 @@ h3,
 .h3.h3,
 .text-block.h3 > *,
 .text-block.h3 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h3--family, var(--font-heading--family));
+  font-family: var(--font-h3--family);
   font-style: var(--font-h3--style);
-  font-weight: var(--font-h3--weight, var(--font-heading--weight));
-  font-size: var(--font-h3--size, var(--font-size-700));
-  line-height: var(--font-h3--line-height, var(--line-height-h3));
-  letter-spacing: var(
-    --font-h3--letter-spacing,
-    var(--letter-spacing-tightest)
-  );
+  font-weight: var(--font-h3--weight);
+  font-size: var(--font-h3--size);
+  line-height: var(--font-h3--line-height);
+  letter-spacing: var(--font-h3--letter-spacing);
   text-transform: var(--font-h3--case);
-  color: var(--color, var(--font-h3--color, var(--color-text-primary)));
+  color: var(--color, var(--font-h3-color));
 }
 
 @media screen and (max-width: 1200px) {
   input.h3,
   textarea.h3,
   select.h3 {
-    font-size: max(1rem, var(--font-h3--size, var(--font-size-700)));
+    font-size: max(1rem, var(--font-h3--size));
   }
 }
 
@@ -837,24 +828,21 @@ h4,
 .h4.h4,
 .text-block.h4 > *,
 .text-block.h4 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h4--family, var(--font-heading--family));
+  font-family: var(--font-h4--family);
   font-style: var(--font-h4--style);
-  font-weight: var(--font-h4--weight, var(--font-heading--weight));
-  font-size: var(--font-h4--size, var(--font-size-600));
-  line-height: var(--font-h4--line-height, var(--line-height-h4));
-  letter-spacing: var(
-    --font-h4--letter-spacing,
-    var(--letter-spacing-tightest)
-  );
+  font-weight: var(--font-h4--weight);
+  font-size: var(--font-h4--size);
+  line-height: var(--font-h4--line-height);
+  letter-spacing: var(--font-h4--letter-spacing);
   text-transform: var(--font-h4--case);
-  color: var(--color, var(--font-h4--color, var(--color-text-primary)));
+  color: var(--color, var(--font-h4-color));
 }
 
 @media screen and (max-width: 1200px) {
   input.h4.h4,
   textarea.h4.h4,
   select.h4.h4 {
-    font-size: max(1rem, var(--font-h4--size, var(--font-size-600)));
+    font-size: max(1rem, var(--font-h4--size));
   }
 }
 
@@ -862,24 +850,21 @@ h5,
 .h5.h5,
 .text-block.h5 > *,
 .text-block.h5 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h5--family, var(--font-heading--family));
+  font-family: var(--font-h5--family);
   font-style: var(--font-h5--style);
-  font-weight: var(--font-h5--weight, var(--font-heading--weight));
-  font-size: var(--font-h5--size, var(--font-size-500));
-  line-height: var(--font-h5--line-height, var(--line-height-h5));
-  letter-spacing: var(
-    --font-h5--letter-spacing,
-    var(--letter-spacing-tightest)
-  );
+  font-weight: var(--font-h5--weight);
+  font-size: var(--font-h5--size);
+  line-height: var(--font-h5--line-height);
+  letter-spacing: var(--font-h5--letter-spacing);
   text-transform: var(--font-h5--case);
-  color: var(--color, var(--font-h5--color, var(--color-text-primary)));
+  color: var(--color, var(--font-h5-color));
 }
 
 @media screen and (max-width: 1200px) {
   input.h5.h5,
   textarea.h5.h5,
   select.h5.h5 {
-    font-size: max(1rem, var(--font-h5--size, var(--font-size-500)));
+    font-size: max(1rem, var(--font-h5--size));
   }
 }
 
@@ -887,21 +872,21 @@ h6,
 .h6.h6,
 .text-block.h6 > *,
 .text-block.h6 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h6--family, var(--font-heading--family));
+  font-family: var(--font-h6--family);
   font-style: var(--font-h6--style);
-  font-weight: var(--font-h6--weight, var(--font-heading--weight));
-  font-size: var(--font-h6--size, var(--font-size-400));
-  line-height: var(--font-h6--line-height, var(--line-height-h6));
-  letter-spacing: var(--font-h6--letter-spacing, var(--letter-spacing-tight));
+  font-weight: var(--font-h6--weight);
+  font-size: var(--font-h6--size);
+  line-height: var(--font-h6--line-height);
+  letter-spacing: var(--font-h6--letter-spacing);
   text-transform: var(--font-h6--case);
-  color: var(--color, var(--font-h6--color, var(--color-text-primary)));
+  color: var(--color, var(--font-h6-color));
 }
 
 @media screen and (max-width: 1200px) {
   input.h6.h6,
   textarea.h6.h6,
   select.h6.h6 {
-    font-size: max(1rem, var(--font-h6--size, var(--font-size-400)));
+    font-size: max(1rem, var(--font-h6--size));
   }
 }
 
