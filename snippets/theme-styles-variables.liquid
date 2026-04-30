@@ -155,18 +155,20 @@
     --letter-spacing-md: 0.13em;
 
     /* Font families */
-    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body--family: 'Moderat Serif';
     --font-body--style: {{ settings.type_body_font.style }};
-    --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
+    --font-body--weight: 400;
+    --font-subheading--family: 'Stabil Grotesk Regular';
     --font-subheading--style: {{ settings.type_subheading_font.style }};
-    --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-subheading--weight: 500;
+    --font-heading--family: 'Moderat Serif Regular';
     --font-heading--style: {{ settings.type_heading_font.style }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
-    --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
+    --font-heading--weight: 400;
+    --font-accent--family: 'Stabil Grotesk Bold';
     --font-accent--style: {{ settings.type_accent_font.style }};
-    --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-accent--weight: 700;
+    --font-labels--family: 'Uniforma Semibold';
+    --font-labels--weight: 400;
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;
@@ -216,11 +218,11 @@
     --letter-spacing--display-normal: 0em;
     --letter-spacing--display-loose: 0.03em;
 
-    --letter-spacing--heading-tight: -0.03em;
+    --letter-spacing--heading-tight: -1px;
     --letter-spacing--heading-normal: 0em;
     --letter-spacing--heading-loose: 0.03em;
 
-    --letter-spacing--body-tight: -0.03em;
+    --letter-spacing--body-tight: -0.5px;
     --letter-spacing--body-normal: 0em;
     --letter-spacing--body-loose: 0.03em;
 
@@ -231,13 +233,13 @@
     --line-height--display-normal: 1.1;
     --line-height--display-loose: 1.2;
 
-    --line-height--heading-tight: 1.15;
-    --line-height--heading-normal: 1.25;
-    --line-height--heading-loose: 1.35;
+    --line-height--heading-tight: 60px;
+    --line-height--heading-normal: 52px;
+    --line-height--heading-loose: 32px;
 
-    --line-height--body-tight: 1.2;
-    --line-height--body-normal: 1.4;
-    --line-height--body-loose: 1.6;
+    --line-height--body-tight: 24px;
+    --line-height--body-normal: 20px;
+    --line-height--body-loose: 16px;
 
     /* Typography presets */
     {% liquid
@@ -387,6 +389,15 @@
     --color-instock: #3ED660;
     --color-lowstock: #EE9441;
     --color-outofstock: #C8C8C8;
+    --color-brand-red: #BC0F0F;
+    --color-neutral-white: #FFFFFF;
+    --color-neutral-black: #000000;
+    --color-neutral-900: #414141;
+    --color-neutral-700: #767676;
+    --color-neutral-500: #ADADAD;
+    --color-neutral-200: #D9D9D9;
+    --color-neutral-100: #F5F5F5;
+    --color-neutral-50: rgb(255 255 255 / 50%);
 
     /* Opacity */
     --opacity-5: 0.05;
@@ -591,8 +602,8 @@
     --button-padding-block: 16px;
 
     /* Button font-family */
-    --button-font-family-primary: var(--font-{{ settings.type_font_button_primary }}--family);
-    --button-font-family-secondary: var(--font-{{ settings.type_font_button_secondary }}--family);
+    --button-font-family-primary: var(--font-labels--family);
+    --button-font-family-secondary: var(--font-labels--family);
 
     /* Button text case */
     --button-text-case: {{ settings.button_text_case }};
@@ -684,5 +695,6 @@
     --cart-secondary-font-family: var(--font-{{ settings.cart_price_font }}--family);
     --cart-secondary-font-style: var(--font-{{ settings.cart_price_font }}--style);
     --cart-secondary-font-weight: var(--font-{{ settings.cart_price_font }}--weight);
+    
   }
 {% endstyle %}
