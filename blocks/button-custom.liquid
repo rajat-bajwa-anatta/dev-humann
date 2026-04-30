@@ -1,9 +1,8 @@
 {%- liquid
 
-  assign button_size_class = block.settings.button_size
-
   assign type_desktop_class = block.settings.type_desktop
   assign style_desktop_class = block.settings.style_desktop
+  assign size_desktop_class = block.settings.size_desktop
   assign width_desktop_class = block.settings.width_desktop
   if width_desktop_class == 'btn--w-custom'
     assign custom_w_md = block.settings.custom_width_desktop | append: 'px'
@@ -11,6 +10,7 @@
 
   assign type_mobile_class = block.settings.type_mobile
   assign style_mobile_class = block.settings.style_mobile
+  assign size_mobile_class = block.settings.size_mobile
   assign width_mobile_class = block.settings.width_mobile
   if width_mobile_class == 'btn--w-custom--mobile'
     assign custom_w_sm = block.settings.custom_width_mobile | append: 'px'
@@ -26,7 +26,7 @@
 
 <a
   href="{{ block.settings.link | default: '#' }}"
-  class="btn {{ type_desktop_class }} {{ style_desktop_class }} {{ button_size_class }} {{ width_desktop_class }} {{ type_mobile_class }} {{ style_mobile_class }} {{ width_mobile_class }}"
+  class="btn {{ type_desktop_class }} {{ style_desktop_class }} {{ size_desktop_class }} {{ width_desktop_class }} {{ type_mobile_class }} {{ style_mobile_class }} {{ size_mobile_class }} {{ width_mobile_class }}"
   {%- if block.settings.open_in_new_tab %} target="_blank" rel="noopener"{% endif -%}
   {%- if inline_style != '' %} style="{{ inline_style }}"{% endif -%}
   {{ block.shopify_attributes }}
@@ -61,17 +61,17 @@
     outline-offset: 2px;
   }
 
-    /* --- Size --- */
-  .btn--large  { padding: 16px 28px; font-size: 16px; }
-  .btn--medium { padding: 12px 20px; font-size: 16px; }
-  .btn--small  { padding: 8px 16px;  font-size: 14px; }
-
-  /* --- Width --- */
-  .btn--w-full   { width: 100%; }
-  .btn--w-auto   { width: fit-content; }
-  .btn--w-custom { width: var(--btn-w-custom-md, 200px); }
-
   @media screen and (min-width: 750px) {
+    /* --- Size --- */
+    .btn--large  { padding: 16px 28px; font-size: 16px; }
+    .btn--medium { padding: 12px 20px; font-size: 16px; }
+    .btn--small  { padding: 8px 16px;  font-size: 14px; }
+
+    /* --- Width --- */
+    .btn--w-full   { width: 100%; }
+    .btn--w-auto   { width: fit-content; }
+    .btn--w-custom { width: var(--btn-w-custom-md, 200px); }
+
     /* --- Style: signature colors, with override hooks --- */
     .btn--primary {
       background-color: var(--color-brand-red);
@@ -116,6 +116,7 @@
       color: var(--btn-outline-fg);
       text-decoration: underline;
       text-underline-offset: 0.2em;
+      padding: 0;
     }
   }
 
@@ -163,13 +164,25 @@
       color: var(--btn-outline-fg);
       text-decoration: underline;
       text-underline-offset: 0.2em;
+      padding: 0;
     }
+
+    /* --- Size --- */
+    .btn--large--mobile  { padding: 14px 24px; font-size: 14px; }
+    .btn--medium--mobile { padding: 10px 18px; font-size: 14px; }
+    .btn--small--mobile  { padding: 6px 12px;  font-size: 12px; }
+
+    /* --- Width --- */
+    .btn--w-full--mobile   { width: 100%; }
+    .btn--w-auto--mobile   { width: fit-content; }
+    .btn--w-custom--mobile { width: var(--btn-w-custom-sm, 160px); }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Custom Button",
+  "tag": null,
   "settings": [
     {
       "type": "header",
@@ -191,17 +204,6 @@
       "id": "open_in_new_tab",
       "label": "Open in new tab",
       "default": false
-    },
-    {
-      "type": "select",
-      "id": "button_size",
-      "label": "Size",
-      "default": "btn--medium",
-      "options": [
-        { "value": "btn--large",  "label": "Large" },
-        { "value": "btn--medium", "label": "Medium" },
-        { "value": "btn--small",  "label": "Small" }
-      ]
     },
     {
       "type": "header",
@@ -229,6 +231,17 @@
         { "value": "btn--tertiary",  "label": "Tertiary" },
         { "value": "btn--inverse",   "label": "Inverse" },
         { "value": "btn--base",      "label": "Base" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size_desktop",
+      "label": "Size",
+      "default": "btn--medium",
+      "options": [
+        { "value": "btn--large",  "label": "Large" },
+        { "value": "btn--medium", "label": "Medium" },
+        { "value": "btn--small",  "label": "Small" }
       ]
     },
     {
@@ -280,6 +293,17 @@
         { "value": "btn--tertiary--mobile",  "label": "Tertiary" },
         { "value": "btn--inverse--mobile",   "label": "Inverse" },
         { "value": "btn--base--mobile",      "label": "Base" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size_mobile",
+      "label": "Size",
+      "default": "btn--medium--mobile",
+      "options": [
+        { "value": "btn--large--mobile",  "label": "Large" },
+        { "value": "btn--medium--mobile", "label": "Medium" },
+        { "value": "btn--small--mobile",  "label": "Small" }
       ]
     },
     {
