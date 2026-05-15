@@ -11,7 +11,7 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <aside
   class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
-  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
+  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px; position: relative;"
 >
   {% liquid
     assign autoplay = false
@@ -36,6 +36,22 @@
       {% content_for 'blocks' %}
     </div>
   </announcement-bar-component>
+
+  {% if section.settings.utility_menu != blank %}
+    {% assign utility_linklist = linklists[section.settings.utility_menu] %}
+    {% if utility_linklist.links.size > 0 %}
+      <nav class="announcement-bar__utility-links" aria-label="Utility">
+        {% for link in utility_linklist.links %}
+          {% if forloop.first == false %}
+            <span class="announcement-bar__utility-separator" aria-hidden="true">|</span>
+          {% endif %}
+          <a href="{{ link.url }}" class="announcement-bar__utility-link">
+            {{- link.title -}}
+          </a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+  {% endif %}
 </aside>
 
 {% stylesheet %}
@@ -121,6 +137,36 @@
     position: absolute;
     inset: 0;
   }
+
+  .announcement-bar__utility-links {
+    position: absolute;
+    inset-inline-end: var(--page-margin);
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    align-items: center;
+    gap: var(--gap-2xs);
+  }
+
+  @media screen and (min-width: 750px) {
+    .announcement-bar__utility-links {
+      display: flex;
+    }
+  }
+
+  .announcement-bar__utility-link {
+    font-size: var(--font-size--sm);
+    line-height: 1.15;
+    color: var(--color-foreground);
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  .announcement-bar__utility-separator {
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+    white-space: nowrap;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -143,6 +189,12 @@
       "max": 10,
       "default": 5,
       "unit": "sec"
+    },
+    {
+      "type": "link_list",
+      "id": "utility_menu",
+      "label": "t:settings.utility_menu",
+      "info": "t:settings.utility_menu_info"
     },
     {
       "type": "header",
