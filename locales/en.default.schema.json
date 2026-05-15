@@ -1058,6 +1058,8 @@
     "right_padding": "Right padding",
     "row": "Row",
     "scroll_speed": "Time to next announcement",
+    "utility_menu": "Utility links",
+    "utility_menu_info": "Links displayed on the right side of the announcement bar (desktop only). Create a menu in Shopify admin Navigation.",
     "search": "Search",
     "search_icon": "Search icon",
     // Setting for search bar placement in header
