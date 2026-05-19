@@ -294,9 +294,9 @@
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 16,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 20,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -308,57 +308,64 @@
             "background_media": "none",
             "video_position": "cover",
             "background_image_position": "cover",
-            "border": "none",
+            "border": "bottom",
             "border_width": 1,
-            "border_opacity": 100,
+            "border_opacity": 30,
             "border_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 24,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
             "science_title": {
               "type": "text",
-              "name": "t:names.heading",
               "settings": {
-                "text": "<p>Learn about the Miracle Molecule</p>",
+                "text": "<p>Learn about the <br><strong>Miracle Molecule</strong></p>",
                 "width": "100%",
                 "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "h3",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "3rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground-heading)"
+                "color": "var(--color-foreground-heading)",
+                "background": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               }
             },
             "science_subtitle": {
               "type": "text",
-              "name": "t:names.text",
               "settings": {
-                "text": "<p>Molecular hydrogen (H₂) is one of the most researched natural antioxidants. Learn how it works and why it matters.</p>",
+                "text": "<p><strong>Did you know</strong> that Nitric Oxide is one of the most important molecules produced in your body?</p>",
                 "width": "100%",
-                "max_width": "narrow",
-                "alignment": "center",
-                "type_preset": "paragraph",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.25rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
                 "wrap": "pretty",
-                "color": "var(--color-foreground)"
-              }
-            },
-            "science_divider": {
-              "type": "_divider",
-              "name": "t:names.divider",
-              "settings": {
-                "thickness": 0.5,
-                "width_percent": 100,
-                "padding-block-start": 8,
-                "padding-block-end": 0
+                "color": "var(--color-foreground)",
+                "background": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               }
             }
           },
           "block_order": [
             "science_title",
-            "science_subtitle",
-            "science_divider"
+            "science_subtitle"
           ]
         },
         "static-carousel-content": {
@@ -368,7 +375,7 @@
             "inherit_color_scheme": true,
             "color_scheme": "",
             "height": "fit",
-            "position": "top",
+            "position": "center",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -381,40 +388,42 @@
           "blocks": {
             "card_1": {
               "type": "_card",
-              "name": "t:names.card",
               "settings": {
                 "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "flex-start",
+                "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-end",
-                "gap": 8,
+                "gap": 24,
                 "inherit_color_scheme": true,
                 "background_media": "image",
+                "background_image": "shopify://shop_images/1-mobile-31613935.jpg",
                 "aspect_ratio": "portrait",
-                "toggle_overlay": true,
-                "overlay_color": "#00000040",
-                "overlay_style": "gradient",
-                "gradient_direction": "to bottom",
-                "padding-block-start": 24,
-                "padding-block-end": 24,
+                "toggle_overlay": false,
+                "padding-block-start": 32,
+                "padding-block-end": 32,
                 "padding-inline-start": 24,
                 "padding-inline-end": 24
               },
               "blocks": {
                 "card_1_text": {
                   "type": "text",
-                  "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>How H₂ is Produced</p>",
+                    "text": "<p>By age 40, Humans naturally produce <strong>50% less Nitric Oxide</strong> than they did at age 20.</p>",
                     "width": "100%",
-                    "alignment": "left",
+                    "max_width": "normal",
+                    "alignment": "center",
                     "type_preset": "custom",
-                    "font": "var(--font-heading--family)",
+                    "font": "var(--font-subheading--family)",
                     "font_size": "1.5rem",
                     "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "letter_spacing": "tight",
                     "case": "none",
                     "wrap": "pretty",
-                    "color": "var(--color-foreground-heading)"
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
                   }
                 }
               },
@@ -424,40 +433,42 @@
             },
             "card_2": {
               "type": "_card",
-              "name": "t:names.card",
               "settings": {
                 "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "flex-start",
+                "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-end",
-                "gap": 8,
+                "gap": 24,
                 "inherit_color_scheme": true,
                 "background_media": "image",
+                "background_image": "shopify://shop_images/2-mobile-31613943.jpg",
                 "aspect_ratio": "portrait",
-                "toggle_overlay": true,
-                "overlay_color": "#00000040",
-                "overlay_style": "gradient",
-                "gradient_direction": "to bottom",
-                "padding-block-start": 24,
-                "padding-block-end": 24,
+                "toggle_overlay": false,
+                "padding-block-start": 32,
+                "padding-block-end": 32,
                 "padding-inline-start": 24,
                 "padding-inline-end": 24
               },
               "blocks": {
                 "card_2_text": {
                   "type": "text",
-                  "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>How Tablets Dissolve</p>",
+                    "text": "<p>Nitric Oxide helps circulate more oxygen and nutrients to your <strong>36 trillion cells.</strong></p>",
                     "width": "100%",
-                    "alignment": "left",
+                    "max_width": "normal",
+                    "alignment": "center",
                     "type_preset": "custom",
-                    "font": "var(--font-heading--family)",
+                    "font": "var(--font-subheading--family)",
                     "font_size": "1.5rem",
                     "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "letter_spacing": "tight",
                     "case": "none",
                     "wrap": "pretty",
-                    "color": "var(--color-foreground-heading)"
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
                   }
                 }
               },
@@ -467,40 +478,42 @@
             },
             "card_3": {
               "type": "_card",
-              "name": "t:names.card",
               "settings": {
                 "content_direction": "column",
-                "horizontal_alignment_flex_direction_column": "flex-start",
+                "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-end",
-                "gap": 8,
+                "gap": 24,
                 "inherit_color_scheme": true,
                 "background_media": "image",
+                "background_image": "shopify://shop_images/3-mobile-31613972.jpg",
                 "aspect_ratio": "portrait",
-                "toggle_overlay": true,
-                "overlay_color": "#00000040",
-                "overlay_style": "gradient",
-                "gradient_direction": "to bottom",
-                "padding-block-start": 24,
-                "padding-block-end": 24,
+                "toggle_overlay": false,
+                "padding-block-start": 32,
+                "padding-block-end": 32,
                 "padding-inline-start": 24,
                 "padding-inline-end": 24
               },
               "blocks": {
                 "card_3_text": {
                   "type": "text",
-                  "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>The Science of Absorption</p>",
+                    "text": "<p>More oxygen and nutrients means <strong>more healthy energy support.</strong></p>",
                     "width": "100%",
-                    "alignment": "left",
+                    "max_width": "normal",
+                    "alignment": "center",
                     "type_preset": "custom",
-                    "font": "var(--font-heading--family)",
+                    "font": "var(--font-subheading--family)",
                     "font_size": "1.5rem",
                     "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "letter_spacing": "tight",
                     "case": "none",
                     "wrap": "pretty",
-                    "color": "var(--color-foreground-heading)"
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
                   }
                 }
               },
@@ -522,9 +535,9 @@
         "section_width": "page-width",
         "columns_gap": 16,
         "color_scheme": "scheme-science",
-        "icons_style": "arrow",
+        "icons_style": "none",
         "icons_shape": "none",
-        "padding-block-start": 48,
+        "padding-block-start": 80,
         "padding-block-end": 0
       }
     },
@@ -533,7 +546,6 @@
       "blocks": {
         "cta_divider": {
           "type": "_divider",
-          "name": "t:names.divider",
           "settings": {
             "thickness": 0.5,
             "width_percent": 100,
@@ -543,9 +555,8 @@
         },
         "cta_button": {
           "type": "button",
-          "name": "t:names.button",
           "settings": {
-            "label": "Explore Our Science",
+            "label": "EXPLORE OUR SCIENCE",
             "open_in_new_tab": false,
             "style_class": "button-secondary",
             "width": "fit-content",
@@ -561,17 +572,17 @@
       ],
       "settings": {
         "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 20,
         "section_width": "page-width",
         "section_height": "",
         "color_scheme": "scheme-science",
         "background_media": "none",
         "border": "none",
         "border_radius": 0,
-        "padding-block-start": 32,
-        "padding-block-end": 48
+        "padding-block-start": 0,
+        "padding-block-end": 80
       }
     }
   },
