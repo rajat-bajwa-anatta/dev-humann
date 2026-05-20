@@ -6,3 +6,7 @@ ignore = [
   "config/*.json"
 ]
 open = true
+
+[environments.dev]
+store = "hmn-anatta-dev.myshopify.com"
+theme = "193599078769"
