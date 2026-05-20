@@ -132,6 +132,7 @@
     "section_size": "Section size",
     // Section header for width and height controls
     "size": "Size",
+    "spacing": "Spacing",
     "slideshow_width": "Slide width",
     "social_media": "Social media",
     "submit_button": "Submit button",
@@ -249,6 +250,7 @@
     "announcement": "Announcement",
     "announcement_bar": "Announcement bar",
     "badges": "Badges",
+    "bestsellers": "Bestsellers",
     "blog": "Blog",
     "blog_card": "Blog card",
     "blog_post": "Blog post",

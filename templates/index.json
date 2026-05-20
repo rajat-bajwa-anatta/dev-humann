@@ -91,73 +91,418 @@
     "bestsellers_carousel": {
       "type": "bestsellers-carousel",
       "blocks": {
-        "card_1": {
-          "type": "product-card",
+        "static-bestsellers-carousel": {
+          "type": "_carousel-content",
+          "static": true,
           "settings": {
-            "image": "shopify://shop_images/sbhc-1-front-1-desktop-26618917.png",
-            "mobile_image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813026.png",
-            "image_fit": "contain",
-            "title": "SuperBeets® Heart Chews",
-            "rating_score": "4.4",
-            "rating_count": "7,143",
-            "badge_text": "#1 cardiologist recommended",
-            "badge_style": "solid",
-            "description": "Our signature product – supporting healthy blood pressure",
-            "cta_text": "Shop Now"
-          }
-        },
-        "card_2": {
-          "type": "product-card",
-          "settings": {
-            "image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813050.png",
-            "image_fit": "cover",
-            "title": "SuperBeets® Heart Powder",
-            "rating_score": "4.2",
-            "rating_count": "3,313",
-            "badge_text": "1.2M+ sold",
-            "badge_style": "outline",
-            "description": "Daily heart support, scoop by scoop.",
-            "cta_text": "Shop Now"
-          }
-        },
-        "card_3": {
-          "type": "product-card",
-          "settings": {
-            "image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813074.png",
-            "image_fit": "cover",
-            "title": "Cardiovascular Health Daily",
-            "rating_score": "4.5",
-            "rating_count": "7,138",
-            "badge_text": "800K+ sold",
-            "badge_style": "outline",
-            "description": "Daily support for healthy blood flow.",
-            "cta_text": "Shop Now"
-          }
-        },
-        "card_4": {
-          "type": "product-card",
-          "settings": {
-            "image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813098.png",
-            "image_fit": "cover",
-            "title": "Sport Pre-Workout Powder",
-            "rating_score": "4.5",
-            "rating_count": "475",
-            "badge_text": "Athlete's choice",
-            "badge_style": "outline",
-            "description": "Clean energy for your next session.",
-            "cta_text": "Shop Now"
-          }
+            "inherit_color_scheme": true,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "height": "fit",
+            "position": "top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card_1": {
+              "type": "_card",
+              "settings": {
+                "content_direction": "column",
+                "gap": 0,
+                "background_media": "none",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "img_1": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/sbhc-1-front-1-desktop-26618917.png",
+                    "image_ratio": "adapt",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "content_1": {
+                  "type": "group",
+                  "settings": {
+                    "content_direction": "column",
+                    "gap": 8,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "inherit_color_scheme": true,
+                    "background_media": "none",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 16,
+                    "padding-block-end": 16,
+                    "padding-inline-start": 16,
+                    "padding-inline-end": 16
+                  },
+                  "blocks": {
+                    "title_1": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h5>SuperBeets® Heart Chews<\/h5>",
+                        "type_preset": "h5",
+                        "width": "100%"
+                      }
+                    },
+                    "rating_1": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>4.4 ★★★★★ (7,143)<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "badge_1": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>#1 cardiologist recommended<\/p>",
+                        "type_preset": "rte",
+                        "background": true,
+                        "background_color": "#76767626",
+                        "corner_radius": 4,
+                        "width": "fit-content"
+                      }
+                    },
+                    "desc_1": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Our signature product – supporting healthy blood pressure<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "cta_1": {
+                      "type": "button",
+                      "settings": {
+                        "label": "Shop Now",
+                        "style_class": "link",
+                        "width": "fit-content"
+                      }
+                    }
+                  },
+                  "block_order": ["title_1", "rating_1", "badge_1", "desc_1", "cta_1"]
+                }
+              },
+              "block_order": ["img_1", "content_1"]
+            },
+            "card_2": {
+              "type": "_card",
+              "settings": {
+                "content_direction": "column",
+                "gap": 0,
+                "background_media": "none",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "img_2": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813050.png",
+                    "image_ratio": "adapt",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "content_2": {
+                  "type": "group",
+                  "settings": {
+                    "content_direction": "column",
+                    "gap": 8,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "inherit_color_scheme": true,
+                    "background_media": "none",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 16,
+                    "padding-block-end": 16,
+                    "padding-inline-start": 16,
+                    "padding-inline-end": 16
+                  },
+                  "blocks": {
+                    "title_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h5>SuperBeets® Heart Powder<\/h5>",
+                        "type_preset": "h5",
+                        "width": "100%"
+                      }
+                    },
+                    "rating_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>4.2 ★★★★★ (3,313)<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "badge_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>1.2M+ sold<\/p>",
+                        "type_preset": "rte",
+                        "background": true,
+                        "background_color": "#76767626",
+                        "corner_radius": 4,
+                        "width": "fit-content"
+                      }
+                    },
+                    "desc_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Daily heart support, scoop by scoop.<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "cta_2": {
+                      "type": "button",
+                      "settings": {
+                        "label": "Shop Now",
+                        "style_class": "link",
+                        "width": "fit-content"
+                      }
+                    }
+                  },
+                  "block_order": ["title_2", "rating_2", "badge_2", "desc_2", "cta_2"]
+                }
+              },
+              "block_order": ["img_2", "content_2"]
+            },
+            "card_3": {
+              "type": "_card",
+              "settings": {
+                "content_direction": "column",
+                "gap": 0,
+                "background_media": "none",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "img_3": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813074.png",
+                    "image_ratio": "adapt",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "content_3": {
+                  "type": "group",
+                  "settings": {
+                    "content_direction": "column",
+                    "gap": 8,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "inherit_color_scheme": true,
+                    "background_media": "none",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 16,
+                    "padding-block-end": 16,
+                    "padding-inline-start": 16,
+                    "padding-inline-end": 16
+                  },
+                  "blocks": {
+                    "title_3": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h5>Cardiovascular Health Daily<\/h5>",
+                        "type_preset": "h5",
+                        "width": "100%"
+                      }
+                    },
+                    "rating_3": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>4.5 ★★★★★ (7,138)<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "badge_3": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>800K+ sold<\/p>",
+                        "type_preset": "rte",
+                        "background": true,
+                        "background_color": "#76767626",
+                        "corner_radius": 4,
+                        "width": "fit-content"
+                      }
+                    },
+                    "desc_3": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Daily support for healthy blood flow.<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "cta_3": {
+                      "type": "button",
+                      "settings": {
+                        "label": "Shop Now",
+                        "style_class": "link",
+                        "width": "fit-content"
+                      }
+                    }
+                  },
+                  "block_order": ["title_3", "rating_3", "badge_3", "desc_3", "cta_3"]
+                }
+              },
+              "block_order": ["img_3", "content_3"]
+            },
+            "card_4": {
+              "type": "_card",
+              "settings": {
+                "content_direction": "column",
+                "gap": 0,
+                "background_media": "none",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "img_4": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/screenshot-2026-04-09-at-12-48-21-1-mobile-197813098.png",
+                    "image_ratio": "adapt",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "content_4": {
+                  "type": "group",
+                  "settings": {
+                    "content_direction": "column",
+                    "gap": 8,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "inherit_color_scheme": true,
+                    "background_media": "none",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 16,
+                    "padding-block-end": 16,
+                    "padding-inline-start": 16,
+                    "padding-inline-end": 16
+                  },
+                  "blocks": {
+                    "title_4": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h5>Sport Pre-Workout Powder<\/h5>",
+                        "type_preset": "h5",
+                        "width": "100%"
+                      }
+                    },
+                    "rating_4": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>4.5 ★★★★★ (475)<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "badge_4": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Athlete's choice<\/p>",
+                        "type_preset": "rte",
+                        "background": true,
+                        "background_color": "#76767626",
+                        "corner_radius": 4,
+                        "width": "fit-content"
+                      }
+                    },
+                    "desc_4": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Clean energy for your next session.<\/p>",
+                        "type_preset": "rte",
+                        "width": "100%"
+                      }
+                    },
+                    "cta_4": {
+                      "type": "button",
+                      "settings": {
+                        "label": "Shop Now",
+                        "style_class": "link",
+                        "width": "fit-content"
+                      }
+                    }
+                  },
+                  "block_order": ["title_4", "rating_4", "badge_4", "desc_4", "cta_4"]
+                }
+              },
+              "block_order": ["img_4", "content_4"]
+            }
+          },
+          "block_order": ["card_1", "card_2", "card_3", "card_4"]
         }
       },
-      "block_order": [
-        "card_1",
-        "card_2",
-        "card_3",
-        "card_4"
-      ],
       "settings": {
         "heading": "<p><strong>Bestsellers<\/strong> for  cardiovascular support.</p>",
         "button_text": "Shop All",
+        "columns": 4,
+        "mobile_columns": "1",
+        "columns_gap": 16,
+        "icons_style": "none",
         "padding-block-start": 80,
         "padding-block-end": 80
       }
