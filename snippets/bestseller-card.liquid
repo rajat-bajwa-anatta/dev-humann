@@ -1,0 +1,128 @@
+{% doc %}
+  Bestseller product card component.
+
+  Renders a product card with image, star rating, badge, description, and CTA link.
+
+  @param {object} block - The section block object with settings and shopify_attributes
+
+  @example
+  {% render 'bestseller-card', block: block %}
+{% enddoc %}
+
+{% liquid
+  assign block = block | default: empty
+  unless block != empty
+    break
+  endunless
+
+  assign title = block.settings.title
+  assign rating_score = block.settings.rating_score
+  assign rating_count = block.settings.rating_count
+  assign badge_text = block.settings.badge_text
+  assign badge_style = block.settings.badge_style | default: 'outline'
+  assign description = block.settings.description
+  assign cta_text = block.settings.cta_text | default: 'Shop Now'
+  assign cta_url = block.settings.cta_url
+  assign image = block.settings.image
+  assign mobile_image = block.settings.mobile_image
+  assign image_fit = block.settings.image_fit | default: 'cover'
+
+  assign rating_number = rating_score | times: 1.0
+  assign full_stars = rating_number | floor
+  assign remainder = rating_number | minus: full_stars
+  assign has_half_star = false
+  if remainder >= 0.3
+    assign has_half_star = true
+  endif
+  assign half_star_index = full_stars | plus: 1
+%}
+
+<article class="bestseller-card" {{ block.shopify_attributes }}>
+  <div class="bestseller-card__media" style="--image-fit: {{ image_fit }};">
+    {% if image %}
+      {% if mobile_image %}
+        <picture>
+          <source
+            media="(min-width: 750px)"
+            srcset="{{ image | image_url: width: image.width }}"
+          >
+          {{
+            mobile_image
+            | image_url: width: mobile_image.width
+            | image_tag:
+              sizes: '(min-width: 750px) 340px, 72vw',
+              widths: '280,340,374,560,680,748',
+              loading: 'lazy',
+              class: 'bestseller-card__image',
+              alt: title
+          }}
+        </picture>
+      {% else %}
+        {{
+          image
+          | image_url: width: image.width
+          | image_tag:
+            sizes: '(min-width: 750px) 340px, 72vw',
+            widths: '280,340,374,560,680,748',
+            loading: 'lazy',
+            class: 'bestseller-card__image',
+            alt: title
+        }}
+      {% endif %}
+    {% else %}
+      <div class="bestseller-card__placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'bestseller-card__placeholder-svg' }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="bestseller-card__content">
+    {% if title != blank %}
+      <h3 class="bestseller-card__title">
+        {% if cta_url != blank %}
+          <a href="{{ cta_url }}" class="bestseller-card__title-link">{{ title | escape }}</a>
+        {% else %}
+          {{ title | escape }}
+        {% endif %}
+      </h3>
+    {% endif %}
+
+    <div class="bestseller-card__meta">
+      {% if rating_score != blank %}
+        <div class="bestseller-card__reviews">
+          <span class="bestseller-card__rating-score">{{ rating_score }}</span>
+          <span class="bestseller-card__stars" aria-label="{{ 'accessibility.rating' | t: rating: rating_score }}">
+            {% for i in (1..5) %}
+              {% if i <= full_stars %}
+                <span class="bestseller-card__star">{{ 'star-solid-10.svg' | inline_asset_content }}</span>
+              {% elsif has_half_star and i == half_star_index %}
+                <span class="bestseller-card__star">{{ 'star-half-alt-solid-3.svg' | inline_asset_content }}</span>
+              {% endif %}
+            {% endfor %}
+          </span>
+          {% if rating_count != blank %}
+            <span class="bestseller-card__rating-count">({{ rating_count }})</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if badge_text != blank %}
+        <span class="bestseller-card__badge bestseller-card__badge--{{ badge_style }}">
+          {{ badge_text | escape }}
+        </span>
+      {% endif %}
+    </div>
+
+    {% if description != blank %}
+      <p class="bestseller-card__description">{{ description | escape }}</p>
+    {% endif %}
+
+    {% if cta_text != blank and cta_url != blank %}
+      <div class="bestseller-card__cta">
+        <a href="{{ cta_url }}" class="bestseller-card__cta-link" tabindex="-1" aria-hidden="true">
+          {{ cta_text | escape }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</article>
