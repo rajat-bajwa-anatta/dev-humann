@@ -153,6 +153,23 @@
     place-content: center;
   }
 
+  @media screen and (max-width: 749px) {
+    .announcement-bar__slide {
+      place-content: center start;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .announcement-bar__slider slideshow-arrows {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: calc(min(680px, 100%) + var(--button-size) * 2);
+    }
+  }
+
   .announcement-bar__text:first-child {
     margin: 0;
   }

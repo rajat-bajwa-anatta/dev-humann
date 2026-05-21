@@ -17,9 +17,7 @@
         "announcement_1": {
           "type": "_announcement",
           "settings": {
-            "text": "Free Shipping on orders $49.99+",
-            "link": "",
-            "button_text": "Shop now",
+            "text": "Free Shipping on orders $49.99+ <u>Shop now</u>",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
             "weight": "500",
@@ -31,9 +29,7 @@
         "announcement_2": {
           "type": "_announcement",
           "settings": {
-            "text": "New Bold Pack is here! Same SuperBeets you love.",
-            "link": "",
-            "button_text": "Shop now",
+            "text": "New Bold Pack is here! Same SuperBeets you love. <u>Shop now</u>",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
             "weight": "500",
