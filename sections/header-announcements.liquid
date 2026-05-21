@@ -22,59 +22,61 @@
     endif
   %}
 
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
+  <div class="announcement-bar__inner">
+    <announcement-bar-component
+      class="announcement-bar__slider"
+      {% if autoplay == true %}
+        autoplay="{{ section.settings.speed }}" aria-live="polite"
+      {% endif %}
+    >
+      {% if show_arrows %}
+        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      {% endif %}
+
+      <div class="announcement-bar__slides">
+        {% content_for 'blocks' %}
+      </div>
+    </announcement-bar-component>
+
+    {% liquid
+      assign has_utility_link_1 = false
+      assign has_utility_link_2 = false
+      if section.settings.utility_link_1_text != blank
+        assign has_utility_link_1 = true
+      endif
+      if section.settings.utility_link_2_text != blank
+        assign has_utility_link_2 = true
+      endif
+    %}
+
+    {% if has_utility_link_1 or has_utility_link_2 %}
+      <div class="announcement-bar__utility-links">
+        {% if has_utility_link_1 %}
+          <a
+            {% if section.settings.utility_link_1_url != blank %}
+              href="{{ section.settings.utility_link_1_url }}"
+            {% endif %}
+          >
+            {{ section.settings.utility_link_1_text | escape }}
+          </a>
+        {% endif %}
+
+        {% if has_utility_link_1 and has_utility_link_2 %}
+          <span class="announcement-bar__utility-separator">|</span>
+        {% endif %}
+
+        {% if has_utility_link_2 %}
+          <a
+            {% if section.settings.utility_link_2_url != blank %}
+              href="{{ section.settings.utility_link_2_url }}"
+            {% endif %}
+          >
+            {{ section.settings.utility_link_2_text | escape }}
+          </a>
+        {% endif %}
+      </div>
     {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
-
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
-    </div>
-  </announcement-bar-component>
-
-  {% liquid
-    assign has_utility_link_1 = false
-    assign has_utility_link_2 = false
-    if section.settings.utility_link_1_text != blank
-      assign has_utility_link_1 = true
-    endif
-    if section.settings.utility_link_2_text != blank
-      assign has_utility_link_2 = true
-    endif
-  %}
-
-  {% if has_utility_link_1 or has_utility_link_2 %}
-    <div class="announcement-bar__utility-links">
-      {% if has_utility_link_1 %}
-        <a
-          {% if section.settings.utility_link_1_url != blank %}
-            href="{{ section.settings.utility_link_1_url }}"
-          {% endif %}
-        >
-          {{ section.settings.utility_link_1_text | escape }}
-        </a>
-      {% endif %}
-
-      {% if has_utility_link_1 and has_utility_link_2 %}
-        <span class="announcement-bar__utility-separator">|</span>
-      {% endif %}
-
-      {% if has_utility_link_2 %}
-        <a
-          {% if section.settings.utility_link_2_url != blank %}
-            href="{{ section.settings.utility_link_2_url }}"
-          {% endif %}
-        >
-          {{ section.settings.utility_link_2_text | escape }}
-        </a>
-      {% endif %}
-    </div>
-  {% endif %}
+  </div>
 </aside>
 
 {% stylesheet %}
@@ -83,15 +85,22 @@
     border-block-end: var(--border-bottom-width) solid var(--color-border);
   }
 
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: 749px) {
+      grid-column: 1 / -1;
+    }
+  }
+
   .announcement-bar__slider {
     display: flex;
     flex-direction: row;
     align-items: center;
     position: relative;
-
-    @media screen and (max-width: 749px) {
-      grid-column: 1 / -1;
-    }
+    flex: 1 1 0%;
+    min-width: 0;
   }
 
   .announcement-bar__slides {
@@ -155,16 +164,6 @@
     justify-content: center;
   }
 
-  @media screen and (min-width: 750px) {
-    .announcement-bar__slider slideshow-arrows {
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      width: calc(min(680px, 100%) + var(--button-size) * 2);
-    }
-  }
 
   .announcement-bar__text:first-child {
     margin: 0;
@@ -176,15 +175,17 @@
   }
 
   .announcement-bar__utility-links {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
     display: none;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
+    padding-inline-end: 20px;
     font-size: var(--font-size-sm);
     color: var(--color-foreground);
+
+    @media screen and (min-width: 990px) {
+      display: flex;
+    }
   }
 
   .announcement-bar__utility-links a {
@@ -196,12 +197,6 @@
 
   .announcement-bar__utility-separator {
     opacity: 0.7;
-  }
-
-  @media screen and (min-width: 990px) {
-    .announcement-bar__utility-links {
-      display: flex;
-    }
   }
 {% endstylesheet %}
 
