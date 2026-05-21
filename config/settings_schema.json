@@ -71,6 +71,11 @@
             "alpha": true
           },
           {
+            "type": "color_background",
+            "id": "gradient_background",
+            "label": "t:settings.gradient_background"
+          },
+          {
             "type": "color",
             "id": "foreground_heading",
             "label": "t:settings.headings",
@@ -505,6 +510,10 @@
             "label": "56px"
           },
           {
+            "value": "60",
+            "label": "60px"
+          },
+          {
             "value": "72",
             "label": "72px"
           },
@@ -793,6 +802,10 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
           },
@@ -947,6 +960,10 @@
           {
             "value": "24",
             "label": "24px"
+          },
+          {
+            "value": "28",
+            "label": "28px"
           },
           {
             "value": "32",
