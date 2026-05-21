@@ -483,11 +483,11 @@
       },
       "scheme-red": {
         "settings": {
-          "background": "#8c0132",
+          "background": "#BC0F0F",
           "gradient_background": "",
-          "foreground_heading": "#767676",
+          "foreground_heading": "#ffffff",
           "foreground": "#ffffff",
-          "primary": "#767676",
+          "primary": "#ffffff",
           "primary_hover": "#000000",
           "border": "#0000000f",
           "shadow": "#000000",

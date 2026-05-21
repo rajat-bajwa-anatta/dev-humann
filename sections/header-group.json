@@ -14,14 +14,29 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
+        "announcement_1": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "Free Shipping on orders $49.99+",
             "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "weight": "",
+            "button_text": "Shop now",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "weight": "500",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_2": {
+          "type": "_announcement",
+          "settings": {
+            "text": "New Bold Pack is here! Same SuperBeets you love.",
+            "link": "",
+            "button_text": "Shop now",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "weight": "500",
             "letter_spacing": "normal",
             "case": "none"
           },
@@ -29,16 +44,19 @@
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_1",
+        "announcement_2"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "divider_width": 1,
-        "padding-block-start": 15,
-        "padding-block-end": 15
+        "color_scheme": "scheme-red",
+        "utility_link_1_text": "Store Locator",
+        "utility_link_2_text": "Humann Professional",
+        "divider_width": 0,
+        "padding-block-start": 8,
+        "padding-block-end": 8
       }
     },
     "header_section": {

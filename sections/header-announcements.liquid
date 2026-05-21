@@ -36,10 +36,50 @@
       {% content_for 'blocks' %}
     </div>
   </announcement-bar-component>
+
+  {% liquid
+    assign has_utility_link_1 = false
+    assign has_utility_link_2 = false
+    if section.settings.utility_link_1_text != blank
+      assign has_utility_link_1 = true
+    endif
+    if section.settings.utility_link_2_text != blank
+      assign has_utility_link_2 = true
+    endif
+  %}
+
+  {% if has_utility_link_1 or has_utility_link_2 %}
+    <div class="announcement-bar__utility-links">
+      {% if has_utility_link_1 %}
+        <a
+          {% if section.settings.utility_link_1_url != blank %}
+            href="{{ section.settings.utility_link_1_url }}"
+          {% endif %}
+        >
+          {{ section.settings.utility_link_1_text | escape }}
+        </a>
+      {% endif %}
+
+      {% if has_utility_link_1 and has_utility_link_2 %}
+        <span class="announcement-bar__utility-separator">|</span>
+      {% endif %}
+
+      {% if has_utility_link_2 %}
+        <a
+          {% if section.settings.utility_link_2_url != blank %}
+            href="{{ section.settings.utility_link_2_url }}"
+          {% endif %}
+        >
+          {{ section.settings.utility_link_2_text | escape }}
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
 </aside>
 
 {% stylesheet %}
   .announcement-bar {
+    position: relative;
     border-block-end: var(--border-bottom-width) solid var(--color-border);
   }
 
@@ -121,6 +161,35 @@
     position: absolute;
     inset: 0;
   }
+
+  .announcement-bar__utility-links {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size-sm);
+    color: var(--color-foreground);
+  }
+
+  .announcement-bar__utility-links a {
+    text-decoration: underline;
+    color: var(--color-foreground);
+    white-space: nowrap;
+    text-underline-offset: 3px;
+  }
+
+  .announcement-bar__utility-separator {
+    opacity: 0.7;
+  }
+
+  @media screen and (min-width: 990px) {
+    .announcement-bar__utility-links {
+      display: flex;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -169,6 +238,30 @@
       "id": "color_scheme",
       "default": "scheme-4",
       "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "header",
+      "content": "t:content.utility_links"
+    },
+    {
+      "type": "text",
+      "id": "utility_link_1_text",
+      "label": "t:settings.utility_link_text_1"
+    },
+    {
+      "type": "url",
+      "id": "utility_link_1_url",
+      "label": "t:settings.utility_link_url_1"
+    },
+    {
+      "type": "text",
+      "id": "utility_link_2_text",
+      "label": "t:settings.utility_link_text_2"
+    },
+    {
+      "type": "url",
+      "id": "utility_link_2_url",
+      "label": "t:settings.utility_link_url_2"
     },
     {
       "type": "range",
