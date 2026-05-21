@@ -150,12 +150,14 @@
   }
 
   .announcement-bar__slide {
-    place-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @media screen and (max-width: 749px) {
     .announcement-bar__slide {
-      place-content: center start;
+      justify-content: flex-start;
     }
   }
 
@@ -181,7 +183,7 @@
 
   .announcement-bar__utility-links {
     position: absolute;
-    right: 0;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     display: none;
