@@ -189,7 +189,7 @@
                               },
                               "blocks": {
                                 "custom_divider_W86DJJ": {
-                                  "type": "_custom_divider",
+                                  "type": "_divider",
                                   "name": "t:names.custom_divider",
                                   "settings": {
                                     "thickness": 1,
@@ -874,7 +874,7 @@
                                   },
                                   "blocks": {
                                     "custom_divider_PdbqFn": {
-                                      "type": "_custom_divider",
+                                      "type": "_divider",
                                       "name": "t:names.custom_divider",
                                       "settings": {
                                         "thickness": 1,
@@ -1351,7 +1351,7 @@
                       },
                       "blocks": {
                         "custom_divider_bUaKRC": {
-                          "type": "_custom_divider",
+                          "type": "_divider",
                           "settings": {
                             "thickness": 1,
                             "corner_radius": "square",
@@ -2556,7 +2556,7 @@
                       ]
                     },
                     "custom_divider_zQNmAW": {
-                      "type": "_custom_divider",
+                      "type": "_divider",
                       "settings": {
                         "thickness": 1,
                         "corner_radius": "square",
@@ -2888,7 +2888,7 @@
                       ]
                     },
                     "custom_divider_BMEcFm": {
-                      "type": "_custom_divider",
+                      "type": "_divider",
                       "settings": {
                         "thickness": 1,
                         "corner_radius": "square",
@@ -3220,7 +3220,7 @@
                       ]
                     },
                     "custom_divider_YVQXdX": {
-                      "type": "_custom_divider",
+                      "type": "_divider",
                       "settings": {
                         "thickness": 1,
                         "corner_radius": "square",
@@ -3608,7 +3608,7 @@
                       ]
                     },
                     "custom_divider_eYmEUn": {
-                      "type": "_custom_divider",
+                      "type": "_divider",
                       "settings": {
                         "thickness": 1,
                         "corner_radius": "square",
@@ -3842,7 +3842,7 @@
                       ]
                     },
                     "custom_divider_URdcBx": {
-                      "type": "_custom_divider",
+                      "type": "_divider",
                       "settings": {
                         "thickness": 1,
                         "corner_radius": "square",
@@ -3947,7 +3947,7 @@
                           "blocks": {}
                         },
                         "custom_divider_KGgzzi": {
-                          "type": "_custom_divider",
+                          "type": "_divider",
                           "settings": {
                             "thickness": 1,
                             "corner_radius": "square",
@@ -4001,7 +4001,7 @@
                           "blocks": {}
                         },
                         "custom_divider_g9APyn": {
-                          "type": "_custom_divider",
+                          "type": "_divider",
                           "settings": {
                             "thickness": 1,
                             "corner_radius": "square",
