@@ -311,7 +311,7 @@
                             <span class="svg-wrapper icon-caret icon-caret--backward">
                               {{- 'icon-caret.svg' | inline_asset_content -}}
                             </span>
-                            <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                            <span class="menu-drawer__back-button-text">{{ 'actions.back' | t }}</span>
                           </button>
                           <button
                             class="button button-unstyled close-button menu-drawer__close-button"
@@ -323,6 +323,9 @@
                               {{- 'icon-close.svg' | inline_asset_content -}}
                             </span>
                           </button>
+                        </div>
+                        <div class="menu-drawer__submenu-header">
+                          <span class="menu-drawer__submenu-category-title">{{ link.title | escape }}</span>
                         </div>
                         {% liquid
                           assign render_link_image = false
@@ -517,6 +520,9 @@
                             </li>
                           {%- endfor -%}
                         </ul>
+                        <a href="{{ link.url }}" class="menu-drawer__shop-all-link">
+                          {{ 'content.shop_all_products' | t }}
+                        </a>
                         {% liquid
                           if eager_loading
                             if block_settings.menu_style == 'featured_collections'
@@ -538,6 +544,7 @@
                             class="menu-drawer__featured-content menu-drawer__featured-content--childlist"
                             style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
                           >
+                            <span class="menu-drawer__featured-heading">{{ 'content.featured' | t }}</span>
                             <ul class="menu-drawer__featured-content-list list-unstyled">
                               {% if featured_collections.size > 0 %}
                                 {%- for collection in featured_collections limit: max_featured_items -%}
@@ -789,12 +796,34 @@
                   {% endif %}
                 >
                   <span class="menu-drawer__custom-utility-title">{{ util_link.title | escape }}</span>
+                  {%- if forloop.first and util_link.object != blank and util_link.object.metafields.custom.description.value != blank -%}
+                    <span class="menu-drawer__custom-utility-description">{{ util_link.object.metafields.custom.description.value }}</span>
+                  {%- endif -%}
                 </a>
               </li>
             {%- endfor -%}
           </ul>
         </div>
       {% endif %}
+
+      {%- if customer -%}
+        <div class="menu-drawer__account-panel">
+          <span class="menu-drawer__account-greeting">{{ 'content.welcome_greeting' | t: name: customer.first_name }}</span>
+          <ul class="menu-drawer__account-menu list-unstyled" role="list">
+            <li>
+              <a href="{{ routes.account_url }}" class="menu-drawer__account-menu-link">{{ customer.first_name }} {{ customer.last_name }}</a>
+            </li>
+            {%- for util_link in drawer_utility_menu.links -%}
+              {%- if util_link.url contains '/account' -%}
+                <li>
+                  <a href="{{ util_link.url }}" class="menu-drawer__account-menu-link">{{ util_link.title | escape }}</a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+          <a href="{{ routes.account_logout_url }}" class="menu-drawer__account-signout">{{ 'content.sign_out' | t }}</a>
+        </div>
+      {%- endif -%}
     </div>
     <div
       class="menu-drawer__backdrop"
@@ -1522,6 +1551,9 @@
   }
 
   .menu-drawer__custom-utility-link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     text-decoration: none;
     color: #414141;
   }
@@ -1530,5 +1562,125 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
+  }
+
+  /* ── AC12: Submenu category header ── */
+  .menu-drawer__submenu-header {
+    padding-inline: var(--padding-xl);
+    padding-block: var(--padding-sm) 0;
+  }
+
+  .menu-drawer__submenu-category-title {
+    font-family: var(--font-accent--family);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    color: #767676;
+  }
+
+  /* ── AC12: Back button text ── */
+  .menu-drawer__back-button-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  /* ── AC12: Shop All Products link ── */
+  .menu-drawer__shop-all-link {
+    display: block;
+    padding-inline: var(--padding-xl);
+    padding-block: var(--padding-sm) var(--padding-md);
+    font-size: 16px;
+    line-height: 24px;
+    color: #414141;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .menu-drawer__shop-all-link:hover {
+    color: #000000;
+  }
+
+  /* ── AC13: Hover state — text color matches dot color ── */
+  .menu-drawer__menu-item--child:has(.menu-dot):hover {
+    color: var(--dot-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .menu-drawer__menu-item--child:has(.menu-dot):hover .menu-drawer__menu-item-text {
+    color: var(--dot-color);
+  }
+
+  /* ── AC14: Featured heading ── */
+  .menu-drawer__featured-heading {
+    display: block;
+    font-family: var(--font-accent--family);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    color: #767676;
+    padding-inline: var(--padding-xl);
+    padding-block-end: var(--padding-sm);
+  }
+
+  /* ── AC15: Utility link description ── */
+  .menu-drawer__custom-utility-description {
+    font-size: 14px;
+    line-height: 20px;
+    color: #767676;
+    font-weight: 400;
+  }
+
+  /* ── AC16: Customer account panel ── */
+  .menu-drawer__account-panel {
+    border-block-start: 1px solid var(--color-border);
+    padding: var(--padding-xl);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .menu-drawer__account-greeting {
+    font-family: var(--font-accent--family);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    color: #767676;
+  }
+
+  .menu-drawer__account-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .menu-drawer__account-menu-link {
+    font-family: var(--font-heading--family);
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -1px;
+    color: #414141;
+    text-decoration: none;
+  }
+
+  .menu-drawer__account-menu-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .menu-drawer__account-signout {
+    font-size: 16px;
+    line-height: 24px;
+    color: #414141;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .menu-drawer__account-signout:hover {
+    color: #000000;
   }
 {% endstylesheet %}
