@@ -24,7 +24,7 @@
       </span>
 
       <span class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}">
-        {{ 'icon-search.svg' | inline_asset_content }}
+        {{ 'search.svg' | inline_asset_content }}
       </span>
     </button>
   </search-button>
@@ -38,15 +38,16 @@
     display: flex;
   }
 
+  /* Override: keep search visible on mobile instead of hiding for drawer mode */
   @media screen and (max-width: 749px) {
     .search-action--hidden-on-drawer {
-      display: none;
+      display: flex;
     }
   }
 
   @media screen and (min-width: 750px) {
     [data-menu-style='drawer'] .search-action--hidden-on-drawer {
-      display: none;
+      display: flex;
     }
 
     [data-menu-style='menu'] .search-action--hidden-on-menu {
@@ -74,5 +75,15 @@
     [data-menu-style='menu'] .header__column--left .search-action--text {
       margin-inline: 0;
     }
+  }
+
+  /* Custom search icon SVG uses stroke="black" — override to use currentColor */
+  .search-action .svg-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .search-action .svg-wrapper svg path {
+    stroke: currentColor;
   }
 {% endstylesheet %}

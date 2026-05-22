@@ -415,8 +415,8 @@
   }
 
   .header {
-    /* Set header paddings based on height setting */
-    --header-padding: var(--padding-sm);
+    /* Set header paddings based on height setting — 64px total with 24px content: (64 - 24) / 2 = 20px */
+    --header-padding: 1.25rem;
     --font-paragraph--line-height: 1;
     --header-content-transition-timing: 0s;
 
@@ -884,13 +884,16 @@
   }
 
   .header-actions__action:not(.account-button) .svg-wrapper {
-    height: var(--button-size);
-    width: var(--button-size);
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .header-actions__action:not(.account-button) svg {
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    width: 24px;
+    height: 24px;
   }
 
   .header:has(#Details-menu-drawer-container[open]) {

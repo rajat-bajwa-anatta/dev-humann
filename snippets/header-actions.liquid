@@ -31,7 +31,7 @@
       class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
       aria-hidden="true"
     >
-      {{ 'icon-cart.svg' | inline_asset_content }}
+      {{ 'cart.svg' | inline_asset_content }}
     </span>
 
     {% render 'cart-bubble', limit: 100 %}
@@ -39,22 +39,13 @@
 {% endcapture %}
 
 {% capture account_icon %}
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="15"
-    height="17"
-    viewBox="0 0 15 17"
-    fill="none"
+  <span
     slot="signed-out-avatar"
-    class="account-button__icon"
+    class="account-button__icon-wrapper"
+    aria-hidden="true"
   >
-    <path
-      stroke="currentColor"
-      stroke-linejoin="round"
-      stroke-width="var(--icon-stroke-width)"
-      d="M10.375 3.813a3.063 3.063 0 1 1-6.125 0 3.063 3.063 0 0 1 6.125 0ZM7.313 9.5c-3.667 0-6.24 2.691-6.563 6.125h13.125C13.552 12.191 10.979 9.5 7.312 9.5Z"
-    />
-  </svg>
+    {{ 'user.svg' | inline_asset_content }}
+  </span>
 {% endcapture %}
 
 <header-actions
@@ -92,7 +83,14 @@
         {% endif %}
       >
         {% if customer %}
-          <div class="account-button__fallback"></div>
+          <span class="account-button__logged-in" slot="signed-in-avatar">
+            <span class="account-button__icon-wrapper" aria-hidden="true">
+              {{ 'user.svg' | inline_asset_content }}
+            </span>
+            <span class="account-button__welcome-text">
+              {{- 'content.welcome_customer' | t: name: customer.first_name -}}
+            </span>
+          </span>
         {% else %}
           <span
             slot="signed-out-avatar"
@@ -321,6 +319,44 @@
     background-color: var(--shopify-account-color-accent, #0a142f);
   }
 
+  /* Custom account icon and welcome text styles */
+  .account-button__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .account-button__icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .account-button__icon-wrapper svg path,
+  .account-button__icon-wrapper svg circle {
+    stroke: currentColor;
+  }
+
+  .account-button__logged-in {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .account-button__welcome-text {
+    font-family: var(--font-custom-stabil, sans-serif);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .account-button__welcome-text {
+      display: none;
+    }
+  }
+
   .account-button--text shopify-account {
     color: inherit;
   }
@@ -538,9 +574,14 @@
 
   header-actions {
     display: flex;
+    gap: 20px;
 
     @media screen and (max-width: 749px) {
       justify-self: flex-end;
+    }
+
+    @media screen and (min-width: 750px) {
+      gap: 24px;
     }
   }
 
@@ -562,13 +603,13 @@
   }
 
   .header__column--right header-actions {
-    margin-inline-start: calc(var(--gap-md) * -1);
+    margin-inline-start: 0;
   }
 
   .header-actions__cart-icon {
-    --cart-bubble-size: 20px;
-    --cart-bubble-top: 4.5px;
-    --cart-bubble-right: 2.5px;
+    --cart-bubble-size: 17px;
+    --cart-bubble-top: 2px;
+    --cart-bubble-right: 0px;
 
     position: relative;
   }
@@ -601,16 +642,26 @@
 
   .header-actions__cart-icon .cart-bubble__text,
   .cart-drawer__heading .cart-bubble__text {
-    font-family: var(--font-paragraph--family);
-    font-weight: var(--font-paragraph--weight);
+    font-family: var(--font-custom-uniforma, sans-serif);
+    font-weight: 500;
+  }
+
+  /* Custom SVG icons use stroke="black" — override to inherit currentColor */
+  cart-icon .svg-wrapper svg path {
+    stroke: currentColor;
+  }
+
+  cart-icon .svg-wrapper svg {
+    width: 24px;
+    height: 24px;
   }
 
   .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
     /* Create donut mask where the cart bubble sits */
     mask: radial-gradient(
-      calc(var(--cart-bubble-size) + 2px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
-      transparent 45.45%,
-      #fff 45.45%,
+      calc(var(--cart-bubble-size) + 3px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
+      transparent 42.5%,
+      #fff 42.5%,
       #fff 100%
     );
   }
@@ -638,13 +689,13 @@
   }
 
   cart-icon:has(.cart-bubble__text-count:empty) {
-    --cart-bubble-size: 10px;
-    --cart-bubble-top: 9px;
-    --cart-bubble-right: 9px;
+    --cart-bubble-size: 8px;
+    --cart-bubble-top: 6px;
+    --cart-bubble-right: 6px;
 
     .svg-wrapper {
-      --cart-bubble-top: 4px;
-      --cart-bubble-right: 4px;
+      --cart-bubble-top: 2px;
+      --cart-bubble-right: 2px;
     }
   }
 

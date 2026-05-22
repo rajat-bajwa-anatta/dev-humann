@@ -107,6 +107,11 @@
             ref="menuitem"
           >
             <span class="menu-list__link-title">{{- link.title -}}</span>
+            {%- if link.links != blank -%}
+              <span class="menu-list__link-chevron svg-wrapper" aria-hidden="true">
+                {{ 'chevron-down.svg' | inline_asset_content }}
+              </span>
+            {%- endif -%}
           </a>
           {%- if link.links != blank -%}
             <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
@@ -684,6 +689,44 @@
   .mega-menu__submenu {
     /* preserves the inherited grid layout when this submenu wrapper is used */
     display: contents;
+  }
+
+  /* Custom font override for desktop menu links */
+  @media screen and (min-width: 750px) {
+    .menu-list__link {
+      font-family: var(--font-custom-stabil, sans-serif);
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.25rem;
+      color: #414141;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .menu-list__link:hover,
+    .menu-list__link:focus {
+      color: #414141;
+    }
+  }
+
+  /* Chevron icon for submenu triggers */
+  .menu-list__link-chevron {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .menu-list__link-chevron {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .menu-list__link-chevron svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+    }
   }
 {% endstylesheet %}
 

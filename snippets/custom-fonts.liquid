@@ -1,0 +1,34 @@
+{% doc %}
+  Custom Font Loading
+
+  Loads custom fonts (Stabil Grotesk, ( K ) Uniforma) via @font-face declarations
+  and defines CSS custom properties for use throughout the theme.
+
+  Font files (stabil-grotesk-medium.woff2, k-uniforma-medium.woff2) must be
+  uploaded to theme assets/ for @font-face to resolve. If font files are missing,
+  the fallback sans-serif will apply.
+
+  @example
+  {% render 'custom-fonts' %}
+{% enddoc %}
+
+<style>
+  @font-face {
+    font-family: 'Stabil Grotesk';
+    font-weight: 500;
+    font-display: swap;
+    src: url({{ 'stabil-grotesk-medium.woff2' | asset_url }}) format('woff2');
+  }
+
+  @font-face {
+    font-family: '( K ) Uniforma';
+    font-weight: 500;
+    font-display: swap;
+    src: url({{ 'k-uniforma-medium.woff2' | asset_url }}) format('woff2');
+  }
+
+  :root {
+    --font-custom-stabil: 'Stabil Grotesk', sans-serif;
+    --font-custom-uniforma: '( K ) Uniforma', sans-serif;
+  }
+</style>
