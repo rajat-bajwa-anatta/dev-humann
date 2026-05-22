@@ -693,36 +693,59 @@
 
   /* ── Custom mega-menu overrides ── */
 
+  /* Submenu panel: white card with rounded corners + shadow */
   .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu {
-    background-color: var(--color-background);
+    background-color: #ffffff;
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.10);
   }
 
-  .menu-list__submenu-inner {
-    padding-block: var(--padding-3xl);
-    padding-inline: var(--padding-xl);
+  /* Generous inner padding */
+  .menu-list__submenu .menu-list__submenu-inner {
+    padding-block: 32px;
+    padding-inline: 40px;
   }
 
-  .mega-menu__link {
+  /*
+    Child links – large heading style (elements with ONLY .mega-menu__link).
+    Specificity (0-3-0): .menu-list__submenu + .mega-menu__link + :not() = wins over (0-1-0) theme defaults.
+  */
+  .menu-list__submenu .mega-menu__link:not(.mega-menu__link--parent) {
     font-family: var(--font-heading--family);
     font-size: 28px;
-    line-height: 32px;
-    letter-spacing: -1px;
+    line-height: 34px;
+    letter-spacing: -0.5px;
     color: #414141;
     font-weight: 400;
+    text-decoration: none;
+    white-space: normal;
+    padding-block: 4px;
   }
 
-  .mega-menu__link--parent {
-    font-family: var(--font-accent--family);
-    font-size: 14px;
+  /*
+    Parent category labels – small grey uppercase.
+    Specificity (0-2-0): wins over the theme's (0-1-0) rules.
+    These are placed AFTER the child rule, so for elements matching both selectors
+    the last-declared property wins — but :not() above already excludes parents from
+    the child rule, so there is no conflict.
+  */
+  .menu-list__submenu .mega-menu__link--parent {
+    font-family: var(--font-body--family);
+    font-size: 11px;
     line-height: 16px;
-    letter-spacing: 0.75px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #9A9A9A;
-    font-weight: 400;
+    font-weight: 500;
+    text-decoration: none;
+    padding-block: 0;
+    margin-block-end: 14px;
+    display: block;
+    pointer-events: none;
+    cursor: default;
   }
 
+  /* Colored benefit dots */
   .menu-dot {
     width: 10px;
     height: 10px;
@@ -731,53 +754,39 @@
     display: inline-block;
   }
 
-  .mega-menu__link:has(.menu-dot) {
+  .menu-list__submenu .mega-menu__link:has(.menu-dot) {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
-  .mega-menu__content-list--products {
-    display: flex;
-    gap: 16px;
-  }
-
-  .mega-menu__content-list-item {
-    width: 314px;
-    border-radius: 16px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-
-  .mega-menu__content-list-item .mega-menu__link-image {
-    border-radius: 16px;
-  }
-
+  /* Backdrop overlay */
   .header__underlay-open {
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(24px);
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
   }
 
   /* ── Custom featured images column ── */
   .mega-menu__content--custom {
     display: flex;
     flex-direction: column;
+    padding-inline-start: 8px;
   }
 
   .mega-menu__featured-heading {
-    font-family: var(--font-accent--family);
-    font-size: 12px;
+    font-family: var(--font-body--family);
+    font-size: 11px;
     line-height: 16px;
-    letter-spacing: 0.75px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #9A9A9A;
-    font-weight: 400;
-    margin: 0 0 12px;
+    font-weight: 500;
+    margin: 0 0 14px;
   }
 
   .mega-menu__content-list--custom {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     align-items: flex-start;
   }
 
@@ -785,12 +794,12 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
 
   .mega-menu__custom-card-image {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
     border-radius: 12px;
   }
@@ -802,7 +811,7 @@
   }
 
   .mega-menu__custom-card-caption {
-    font-family: var(--font-heading--family);
+    font-family: var(--font-body--family);
     font-size: 14px;
     line-height: 20px;
     color: #414141;
