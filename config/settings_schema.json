@@ -2284,5 +2284,40 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "t:settings.search",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:content.popular_searches"
+      },
+      {
+        "type": "text",
+        "id": "popular_searches_heading",
+        "label": "t:settings.popular_searches_heading",
+        "default": "Popular Searches"
+      },
+      {
+        "type": "text",
+        "id": "popular_search_1",
+        "label": "t:settings.popular_search_1"
+      },
+      {
+        "type": "text",
+        "id": "popular_search_2",
+        "label": "t:settings.popular_search_2"
+      },
+      {
+        "type": "text",
+        "id": "popular_search_3",
+        "label": "t:settings.popular_search_3"
+      },
+      {
+        "type": "text",
+        "id": "popular_search_4",
+        "label": "t:settings.popular_search_4"
+      }
+    ]
   }
 ]

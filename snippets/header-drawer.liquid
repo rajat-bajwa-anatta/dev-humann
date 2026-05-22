@@ -43,6 +43,16 @@
   fetchpriority="low"
 ></script>
 
+<script type="module">
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-drawer-search-trigger]');
+    if (trigger) {
+      event.preventDefault();
+      document.dispatchEvent(new CustomEvent('drawer-search-open'));
+    }
+  });
+</script>
+
 <header-drawer
   class="header-drawer {{ class }}"
   style="--menu-image-border-radius: {{ image_border_radius }}px; --resource-card-corner-radius: {{ image_border_radius }}px;"
@@ -82,6 +92,17 @@
         <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
           {{- 'icon-close.svg' | inline_asset_content -}}
         </span>
+      </button>
+      <button
+        type="button"
+        class="menu-drawer__search-trigger"
+        aria-label="{{ 'content.search_drawer_placeholder' | t }}"
+        data-drawer-search-trigger
+      >
+        <span class="menu-drawer__search-trigger-icon svg-wrapper">
+          {{- 'icon-search.svg' | inline_asset_content -}}
+        </span>
+        <span>{{ 'content.search_drawer_placeholder' | t }}</span>
       </button>
       <nav
         class="menu-drawer__navigation"

@@ -56,6 +56,9 @@ class PredictiveSearchComponent extends Component {
       this.addEventListener('click', this.#handleModalClick, { signal });
     }
 
+    // Listen for drawer search trigger
+    document.addEventListener('drawer-search-open', this.#handleDrawerSearchOpen, { signal });
+
     if (RecentlyViewed.getProducts().length > 0) {
       requestIdleCallback(() => {
         this.#loadEmptyState();
@@ -107,6 +110,35 @@ class PredictiveSearchComponent extends Component {
   #handleDialogOpen = () => {
     if (!this.#emptyStateLoaded && RecentlyViewed.getProducts().length > 0) {
       this.#loadEmptyState();
+    }
+  };
+
+  /**
+   * Handles the drawer search trigger opening the search modal.
+   * Closes the menu drawer and opens the search dialog with focus.
+   */
+  #handleDrawerSearchOpen = () => {
+    // Close the menu drawer if open
+    const menuDrawer = document.querySelector('header-drawer');
+    if (menuDrawer) {
+      const details = menuDrawer.querySelector('details[open]');
+      if (details) {
+        details.removeAttribute('open');
+      }
+      if (typeof menuDrawer.close === 'function') {
+        menuDrawer.close();
+      }
+    }
+
+    // Open the search dialog
+    const { dialog } = this;
+    if (dialog) {
+      requestAnimationFrame(() => {
+        dialog.openDialog();
+        requestAnimationFrame(() => {
+          this.refs.searchInput?.focus();
+        });
+      });
     }
   };
 
