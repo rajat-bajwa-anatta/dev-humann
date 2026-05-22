@@ -2,6 +2,7 @@
   Renders a header drawer menu triggered by the top details element.
 
   @param {object} linklist - The linklist to render
+  @param {object} [drawer_utility_menu] - Optional utility linklist for bottom links (e.g., Store Locator, FAQs)
   @param {string} [class] - Additional classes to add to the drawer
   @param {string} [data_header_drawer_type] - The type of header drawer to render
   @param {object} [block] - The block that can be used to provide settings
@@ -73,16 +74,32 @@
         color-{{ block_settings.color_scheme }}
       "
     >
-      <button
-        class="button close-button menu-drawer__close-button"
-        type="button"
-        aria-label="{{ 'actions.close' | t }}"
-        on:click="/close"
-      >
-        <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
-      </button>
+      <div class="menu-drawer__top-bar">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="menu-drawer__search">
+          <label for="menu-drawer-search" class="visually-hidden">{{ 'content.search' | t }}</label>
+          <span class="menu-drawer__search-icon svg-wrapper" aria-hidden="true">
+            {{- 'icon-search.svg' | inline_asset_content -}}
+          </span>
+          <input
+            id="menu-drawer-search"
+            type="search"
+            name="q"
+            class="menu-drawer__search-input"
+            placeholder="{{ 'content.search_input_placeholder' | t }}"
+            autocomplete="off"
+          >
+        </form>
+        <button
+          class="button close-button menu-drawer__close-button"
+          type="button"
+          aria-label="{{ 'actions.close' | t }}"
+          on:click="/close"
+        >
+          <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
       <nav
         class="menu-drawer__navigation"
         style="
@@ -414,6 +431,7 @@
                                                 aria-current="page"
                                               {% endif %}
                                             >
+                                              {% render 'menu-dot-color', link: grandchildlink %}
                                               {% if render_link_image %}
                                                 {% render 'link-featured-image',
                                                   link: grandchildlink,
@@ -479,6 +497,7 @@
                                             aria-current="page"
                                           {% endif %}
                                         >
+                                          {% render 'menu-dot-color', link: grandchildlink %}
                                           {% if render_link_image %}
                                             {% render 'link-featured-image',
                                               link: grandchildlink,
@@ -753,6 +772,26 @@
                 {%- endfor -%}
               {% endpaginate %}
             {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if drawer_utility_menu != blank and drawer_utility_menu.links.size > 0 %}
+        <div class="menu-drawer__custom-utility-links">
+          <ul class="menu-drawer__custom-utility-list list-unstyled" role="list">
+            {%- for util_link in drawer_utility_menu.links -%}
+              <li class="menu-drawer__custom-utility-item">
+                <a
+                  href="{{ util_link.url }}"
+                  class="menu-drawer__custom-utility-link"
+                  {% if util_link.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span class="menu-drawer__custom-utility-title">{{ util_link.title | escape }}</span>
+                </a>
+              </li>
+            {%- endfor -%}
           </ul>
         </div>
       {% endif %}
@@ -1409,5 +1448,87 @@
 
   .drawer-localization .language-selector .svg-wrapper.icon-caret svg {
     transform: none;
+  }
+
+  /* ── Custom drawer overrides ── */
+
+  .menu-drawer__top-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: var(--padding-lg);
+    padding-inline-end: 0;
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    background: #F0F0F0;
+    border-radius: 32px;
+    height: 41px;
+    padding-inline: 16px;
+  }
+
+  .menu-drawer__search-icon {
+    flex-shrink: 0;
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+    color: #A0A0A0;
+  }
+
+  .menu-drawer__search-input {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: var(--color-foreground);
+    width: 100%;
+    outline: none;
+  }
+
+  .menu-drawer__search-input::placeholder {
+    color: #A0A0A0;
+  }
+
+  .menu-drawer__top-bar .menu-drawer__close-button {
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__menu-item--mainlist {
+    font-family: var(--font-heading--family);
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -1px;
+    color: #414141;
+  }
+
+  .menu-drawer__menu-item--child:has(.menu-dot) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menu-drawer__custom-utility-links {
+    border-block-start: 1px solid var(--color-border);
+    padding: var(--padding-xl);
+  }
+
+  .menu-drawer__custom-utility-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .menu-drawer__custom-utility-link {
+    text-decoration: none;
+    color: #414141;
+  }
+
+  .menu-drawer__custom-utility-title {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
   }
 {% endstylesheet %}

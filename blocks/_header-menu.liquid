@@ -18,8 +18,12 @@
       data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
+      {%- liquid
+        assign drawer_linklist = block_settings.mobile_menu | default: block_settings.menu
+      -%}
       {% render 'header-drawer',
-        linklist: block_settings.menu,
+        linklist: drawer_linklist,
+        drawer_utility_menu: block_settings.drawer_utility_menu,
         data_header_drawer_type: 'mobile-drawer',
         block: block,
         section: section
@@ -685,6 +689,73 @@
     /* preserves the inherited grid layout when this submenu wrapper is used */
     display: contents;
   }
+
+  /* ── Custom mega-menu overrides ── */
+
+  .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu {
+    background-color: var(--color-background);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  .menu-list__submenu-inner {
+    padding-block: var(--padding-3xl);
+    padding-inline: var(--padding-xl);
+  }
+
+  .mega-menu__link--parent {
+    font-family: var(--font-accent--family);
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    color: #9A9A9A;
+    font-weight: 400;
+  }
+
+  .mega-menu__link {
+    font-family: var(--font-heading--family);
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -1px;
+    color: #414141;
+    font-weight: 400;
+  }
+
+  .menu-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .mega-menu__link:has(.menu-dot) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mega-menu__content-list--products {
+    display: flex;
+    gap: 16px;
+  }
+
+  .mega-menu__content-list-item {
+    width: 314px;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .mega-menu__content-list-item .mega-menu__link-image {
+    border-radius: 16px;
+  }
+
+  .header__underlay-open {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(24px);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -912,6 +983,18 @@
       "id": "drawer_dividers",
       "label": "t:settings.dividers",
       "default": false
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_menu",
+      "label": "t:settings.mobile_menu",
+      "info": "t:info.mobile_menu_info"
+    },
+    {
+      "type": "link_list",
+      "id": "drawer_utility_menu",
+      "label": "t:settings.utility_menu",
+      "info": "t:info.utility_menu_info"
     }
   ]
 }

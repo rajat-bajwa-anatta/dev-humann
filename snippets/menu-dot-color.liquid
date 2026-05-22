@@ -1,0 +1,38 @@
+{%- doc -%}
+  Menu Dot Color
+
+  Renders a colored dot (10x10px circle) before a menu item.
+  Reads `link.object.metafields.custom.dot_color` to get the hex color.
+  For light colors (brightness > 200), adds a 1px border.
+
+  @param {object} link - The menu link object (required)
+
+  @example
+  {% render 'menu-dot-color', link: childlink %}
+{%- enddoc -%}
+
+{%- liquid
+  assign link = link | default: empty
+  unless link != empty
+    break
+  endunless
+
+  assign dot_color = link.object.metafields.custom.dot_color.value
+  unless dot_color != blank
+    break
+  endunless
+
+  assign r = dot_color | color_extract: 'red'
+  assign g = dot_color | color_extract: 'green'
+  assign b = dot_color | color_extract: 'blue'
+  assign brightness = r | times: 299 | plus: 0
+  assign g_val = g | times: 587
+  assign b_val = b | times: 114
+  assign brightness = brightness | plus: g_val | plus: b_val | divided_by: 1000
+-%}
+
+<span
+  class="menu-dot"
+  style="background-color: {{ dot_color }};{% if brightness > 200 %} border: 1px solid #D0D0D0;{% endif %}"
+  aria-hidden="true"
+></span>
