@@ -760,10 +760,19 @@
     gap: 10px;
   }
 
-  /* Backdrop overlay */
-  .header__underlay-open {
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(8px);
+  /*
+    Full-page backdrop overlay when mega menu is open.
+    body::before with position:fixed covers the entire viewport regardless of
+    the header's stacking context. The header + mega menu sit above at z-index 16.
+  */
+  body:has(#header-component .menu-list__link[aria-expanded='true'])::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    z-index: 11;
+    pointer-events: none;
   }
 
   /* ── Custom featured images column ── */
