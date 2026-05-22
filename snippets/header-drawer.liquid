@@ -112,10 +112,7 @@
           class="menu-drawer__menu has-submenu"
           role="list"
         >
-          {%- comment -%}
-            Handle menus with fewer than 3 levels of links
-          {%- endcomment -%}
-          {% if linklist.levels < 3 %}
+          {% if false %}
             {% assign first_accordion_open = false %}
             {% assign animation_index = 0 %}
             {%- for link in linklist.links -%}
@@ -302,6 +299,32 @@
                       style="--menu-drawer-animation-index: {{ animation_index }};"
                     >
                       <div class="menu-drawer__inner-submenu">
+                        <div class="menu-drawer__top-bar">
+                          <form action="{{ routes.search_url }}" method="get" role="search" class="menu-drawer__search">
+                            <label for="menu-drawer-sub-search-{{ link.handle }}" class="visually-hidden">{{ 'content.search' | t }}</label>
+                            <span class="menu-drawer__search-icon svg-wrapper" aria-hidden="true">
+                              {{- 'icon-search.svg' | inline_asset_content -}}
+                            </span>
+                            <input
+                              id="menu-drawer-sub-search-{{ link.handle }}"
+                              type="search"
+                              name="q"
+                              class="menu-drawer__search-input"
+                              placeholder="{{ 'content.search_input_placeholder' | t }}"
+                              autocomplete="off"
+                            >
+                          </form>
+                          <button
+                            class="button close-button menu-drawer__close-button"
+                            type="button"
+                            aria-label="{{ 'actions.close' | t }}"
+                            on:click="header-drawer/close"
+                          >
+                            <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+                              {{- 'icon-close.svg' | inline_asset_content -}}
+                            </span>
+                          </button>
+                        </div>
                         <div class="menu-drawer__nav-buttons">
                           <button
                             class="button menu-drawer__back-button focus-inset"
@@ -312,16 +335,6 @@
                               {{- 'icon-caret.svg' | inline_asset_content -}}
                             </span>
                             <span class="menu-drawer__back-button-text">{{ 'actions.back' | t }}</span>
-                          </button>
-                          <button
-                            class="button button-unstyled close-button menu-drawer__close-button"
-                            type="button"
-                            aria-label="{{ 'actions.close' | t }}"
-                            on:click="header-drawer/close"
-                          >
-                            <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
-                              {{- 'icon-close.svg' | inline_asset_content -}}
-                            </span>
                           </button>
                         </div>
                         <div class="menu-drawer__submenu-header">
@@ -998,7 +1011,6 @@
 
   .menu-drawer__nav-buttons {
     display: flex;
-    justify-content: space-between;
     align-items: center;
   }
 

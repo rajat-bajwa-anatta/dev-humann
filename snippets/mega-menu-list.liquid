@@ -10,6 +10,7 @@
   @param {number} [content_aspect_ratio] - Aspect ratio for content images.
   @param {number} [image_border_radius] - Border radius for content images.
   @param {object} [section] - The section object.
+  @param {object} [block_settings] - Block settings for custom images mode.
 
   @example
   {% render 'mega-menu-list', parent_link: link, id: 'MegaMenuList-1', grid_columns_count: 6, menu_content_type: 'featured_products' %}
@@ -245,6 +246,48 @@
     assign max_featured_collections_tablet = 1
     assign max_menu_columns_tablet = max_menu_columns_tablet | minus: max_collection_columns_tablet
   endif
+
+  if menu_content_type == 'custom_images'
+    assign custom_images_content_columns = 2
+    assign has_custom_images_for_link = false
+    assign custom_img_a = nil
+    assign custom_img_b = nil
+    assign custom_cap_a = ''
+    assign custom_cap_b = ''
+
+    if block_settings != blank
+      if block_settings.featured_handle_1 != blank and block_settings.featured_handle_1 == parent_link.handle
+        assign custom_img_a = block_settings.featured_image_1a
+        assign custom_cap_a = block_settings.featured_caption_1a
+        assign custom_img_b = block_settings.featured_image_1b
+        assign custom_cap_b = block_settings.featured_caption_1b
+        if custom_img_a != blank or custom_img_b != blank
+          assign has_custom_images_for_link = true
+        endif
+      elsif block_settings.featured_handle_2 != blank and block_settings.featured_handle_2 == parent_link.handle
+        assign custom_img_a = block_settings.featured_image_2a
+        assign custom_cap_a = block_settings.featured_caption_2a
+        assign custom_img_b = block_settings.featured_image_2b
+        assign custom_cap_b = block_settings.featured_caption_2b
+        if custom_img_a != blank or custom_img_b != blank
+          assign has_custom_images_for_link = true
+        endif
+      elsif block_settings.featured_handle_3 != blank and block_settings.featured_handle_3 == parent_link.handle
+        assign custom_img_a = block_settings.featured_image_3a
+        assign custom_cap_a = block_settings.featured_caption_3a
+        assign custom_img_b = block_settings.featured_image_3b
+        assign custom_cap_b = block_settings.featured_caption_3b
+        if custom_img_a != blank or custom_img_b != blank
+          assign has_custom_images_for_link = true
+        endif
+      endif
+    endif
+
+    if has_custom_images_for_link
+      assign max_menu_columns = max_menu_columns | minus: custom_images_content_columns
+      assign max_menu_columns_tablet = max_menu_columns_tablet | minus: custom_images_content_columns | at_least: 2
+    endif
+  endif
 %}
 
 {% style %}
@@ -343,4 +386,55 @@
         {% endfor %}
       </ul>
     </span>
+  {% when 'custom_images' %}
+    {% if has_custom_images_for_link %}
+      <span
+        class="mega-menu__content mega-menu__content--custom"
+        style="--menu-content-columns-desktop: {{ custom_images_content_columns }}; --menu-content-columns-tablet: {{ custom_images_content_columns }}; --resource-card-corner-radius: {{ image_border_radius }}px;"
+      >
+        <p class="mega-menu__featured-heading">{{ 'content.featured' | t }}</p>
+        <ul class="mega-menu__content-list mega-menu__content-list--custom list-unstyled">
+          {% if custom_img_a != blank %}
+            <li class="mega-menu__content-list-item">
+              <div class="mega-menu__custom-card">
+                <div class="mega-menu__custom-card-image" style="border-radius: {{ image_border_radius }}px;">
+                  {{
+                    custom_img_a
+                    | image_url: width: 400
+                    | image_tag:
+                      sizes: '(min-width: 990px) 200px, 150px',
+                      widths: '150,200,300,400',
+                      loading: 'lazy',
+                      alt: custom_cap_a
+                  }}
+                </div>
+                {% if custom_cap_a != blank %}
+                  <p class="mega-menu__custom-card-caption">{{ custom_cap_a }}</p>
+                {% endif %}
+              </div>
+            </li>
+          {% endif %}
+          {% if custom_img_b != blank %}
+            <li class="mega-menu__content-list-item">
+              <div class="mega-menu__custom-card">
+                <div class="mega-menu__custom-card-image" style="border-radius: {{ image_border_radius }}px;">
+                  {{
+                    custom_img_b
+                    | image_url: width: 400
+                    | image_tag:
+                      sizes: '(min-width: 990px) 200px, 150px',
+                      widths: '150,200,300,400',
+                      loading: 'lazy',
+                      alt: custom_cap_b
+                  }}
+                </div>
+                {% if custom_cap_b != blank %}
+                  <p class="mega-menu__custom-card-caption">{{ custom_cap_b }}</p>
+                {% endif %}
+              </div>
+            </li>
+          {% endif %}
+        </ul>
+      </span>
+    {% endif %}
 {% endcase %}
