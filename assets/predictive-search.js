@@ -134,7 +134,7 @@ class PredictiveSearchComponent extends Component {
     const { dialog } = this;
     if (dialog) {
       requestAnimationFrame(() => {
-        dialog.openDialog();
+        dialog.showDialog();
         requestAnimationFrame(() => {
           this.refs.searchInput?.focus();
         });

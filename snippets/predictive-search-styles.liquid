@@ -168,21 +168,65 @@
       }
 
       .predictive-search-form__content {
-        /* The parent has overflow auto, we want to prevent a double scrollbar during animation */
-        max-height: 100%;
+        max-height: none;
+        overflow: visible;
       }
 
       .predictive-search-form__content-wrapper {
         box-shadow: none;
+        position: relative;
+        top: auto;
+        left: auto;
+        flex: 1;
+        overflow-y: auto;
+        max-height: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
 
       .predictive-search-form__header {
         box-shadow: none;
+        flex-shrink: 0;
       }
 
       .predictive-search-form__footer {
         padding-block: var(--padding-2xl);
+        position: static;
       }
+    }
+  }
+
+  /* Mobile drawer: product grid instead of horizontal scroll */
+  @media screen and (max-width: 749px) {
+    .dialog-modal .predictive-search-results__wrapper-products {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      overflow-x: visible;
+      flex-wrap: unset;
+      scroll-snap-type: none;
+    }
+
+    .dialog-modal .predictive-search-results__wrapper-products > * {
+      flex: unset;
+      scroll-snap-align: none;
+    }
+  }
+
+  /* Mobile drawer: make form fill dialog height */
+  @media screen and (max-width: 749px) {
+    .search-modal__content predictive-search-component {
+      height: 100%;
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .search-modal__content .predictive-search-form {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
   }
 
@@ -658,10 +702,6 @@
 
   .predictive-search-results__column-left {
     padding: var(--padding-xl);
-
-    @media screen and (max-width: 749px) {
-      order: 2;
-    }
   }
 
   .predictive-search-results__column-right {
@@ -673,8 +713,20 @@
     }
 
     @media screen and (max-width: 749px) {
-      order: 1;
       padding-block-end: 0;
+    }
+  }
+
+  /* Empty state: on mobile show popular searches (right col) before products (left col) */
+  .predictive-search-results__columns--empty-state .predictive-search-results__column-left {
+    @media screen and (max-width: 749px) {
+      order: 2;
+    }
+  }
+
+  .predictive-search-results__columns--empty-state .predictive-search-results__column-right {
+    @media screen and (max-width: 749px) {
+      order: 1;
     }
   }
 
@@ -749,8 +801,8 @@
 
   .predictive-search-results__article-link {
     display: flex;
-    flex-direction: row;
-    gap: 16px;
+    flex-direction: column;
+    gap: 12px;
     padding: 0;
     border-radius: 8px;
     color: #414141;
@@ -765,12 +817,10 @@
   }
 
   .predictive-search-results__article-image {
-    width: 120px;
-    min-width: 120px;
+    width: 100%;
     aspect-ratio: 313 / 224;
     border-radius: 8px;
     overflow: hidden;
-    flex-shrink: 0;
   }
 
   .predictive-search-results__article-image img {
@@ -792,7 +842,6 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    justify-content: center;
     min-width: 0;
   }
 

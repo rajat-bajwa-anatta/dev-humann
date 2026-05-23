@@ -17,7 +17,7 @@
   style="--color-shadow: rgb(var(--color-foreground-rgb) / {{ shadow_opacity }});"
 >
   {% if load_empty_state %}
-    <div class="predictive-search-results__inner predictive-search-results__columns">
+    <div class="predictive-search-results__inner predictive-search-results__columns predictive-search-results__columns--empty-state">
       {% liquid
         assign collection = settings.empty_state_collection | default: collections.all
         assign default_title = 'content.popular_products' | t

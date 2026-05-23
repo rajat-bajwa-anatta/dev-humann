@@ -106,8 +106,8 @@
                                 article.image
                                 | image_url: width: article.image.width
                                 | image_tag:
-                                  sizes: '120px',
-                                  widths: '120,240,360',
+                                  sizes: '(min-width: 750px) 30vw, 80vw',
+                                  widths: '400,600,800,1000',
                                   loading: 'lazy',
                                   alt: article.image.alt
                               }}
