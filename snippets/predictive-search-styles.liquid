@@ -702,6 +702,7 @@
 
   .predictive-search-results__column-left {
     padding: var(--padding-xl);
+    container-type: inline-size;
   }
 
   .predictive-search-results__column-right {
@@ -714,6 +715,13 @@
 
     @media screen and (max-width: 749px) {
       padding-block-end: 0;
+    }
+  }
+
+  /* Empty state: wider left column (popular products) on desktop */
+  .predictive-search-results__columns--empty-state {
+    @media screen and (min-width: 750px) {
+      grid-template-columns: 2fr 1fr;
     }
   }
 
