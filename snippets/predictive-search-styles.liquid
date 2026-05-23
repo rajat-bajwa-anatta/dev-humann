@@ -646,9 +646,12 @@
 
   /* Two-column layout for empty state and search results */
   .predictive-search-results__columns {
+    display: flex;
+    flex-direction: column;
+
     @media screen and (min-width: 750px) {
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 1fr;
       gap: 0;
     }
   }
