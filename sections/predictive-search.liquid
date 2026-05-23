@@ -100,15 +100,36 @@
                           ref="resultsItems[]"
                           on:keydown="/onSearchKeyDown"
                         >
-                          <span class="predictive-search-results__article-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path d="M13.5 2.5H2.5V13.5H13.5V2.5Z" stroke="currentColor" stroke-width="1.2"/>
-                              <path d="M5 5.5H11" stroke="currentColor" stroke-width="1.2"/>
-                              <path d="M5 8H11" stroke="currentColor" stroke-width="1.2"/>
-                              <path d="M5 10.5H9" stroke="currentColor" stroke-width="1.2"/>
-                            </svg>
-                          </span>
-                          {{ article.title }}
+                          <div class="predictive-search-results__article-image">
+                            {%- if article.image -%}
+                              {{
+                                article.image
+                                | image_url: width: article.image.width
+                                | image_tag:
+                                  sizes: '120px',
+                                  widths: '120,240,360',
+                                  loading: 'lazy',
+                                  alt: article.image.alt
+                              }}
+                            {%- else -%}
+                              <div class="predictive-search-results__article-image-placeholder" aria-hidden="true"></div>
+                            {%- endif -%}
+                          </div>
+                          <div class="predictive-search-results__article-content">
+                            <div class="predictive-search-results__article-meta">
+                              {%- if article.tags.size > 0 -%}
+                                <span class="predictive-search-results__article-category">{{ article.tags.first }}</span>
+                                <span class="predictive-search-results__article-meta-separator" aria-hidden="true"></span>
+                              {%- endif -%}
+                              {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+                              {%- assign read_time = word_count | divided_by: 200 -%}
+                              {%- if read_time < 1 -%}
+                                {%- assign read_time = 1 -%}
+                              {%- endif -%}
+                              <span>{{ read_time }} min read</span>
+                            </div>
+                            <h4 class="predictive-search-results__article-title">{{ article.title }}</h4>
+                          </div>
                         </a>
                       </li>
                     {%- endfor -%}

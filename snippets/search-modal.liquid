@@ -166,15 +166,15 @@
   }
 
   .search-modal__content::backdrop {
-    background-color: rgb(0 0 0 / 0.3);
-    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(24px);
   }
 
   .dialog-modal[open].search-modal__content {
     transform-origin: top center;
     animation: search-mega-slide-down 300ms var(--ease-out-quad) forwards;
     border-radius: var(--search-border-radius);
-    box-shadow: 0 8px 40px rgb(0 0 0 / 0.12);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
 
     @media screen and (max-width: 749px) {
       border-radius: 0;
@@ -442,6 +442,7 @@
     padding: 0;
     margin-inline-end: var(--margin-md);
     background: transparent;
+    text-decoration: underline;
     color: var(--color-foreground);
     opacity: 0.68;
     transition: opacity var(--animation-speed-medium) var(--animation-timing-fade-out),
