@@ -17,28 +17,102 @@
   style="--color-shadow: rgb(var(--color-foreground-rgb) / {{ shadow_opacity }});"
 >
   {% if load_empty_state %}
-    <div class="predictive-search-results__inner">
+    <div class="predictive-search-results__inner predictive-search-results__columns predictive-search-results__columns--empty-state">
       {% liquid
         assign collection = settings.empty_state_collection | default: collections.all
-        assign default_title = 'content.search_results_resource_products' | t
+        assign default_title = 'content.popular_products' | t
         assign title = settings.empty_state_collection.title | default: default_title
       %}
-      {% paginate collection.products by 4 %}
-        {% assign products = collection.products %}
-        {% comment %} Only show products section if there are products to display {% endcomment %}
-        {% if products.size > 0 %}
-          {% render 'predictive-search-products-list',
-            products_test_id: products_test_id,
-            title: title,
-            products: products,
-            limit: 4
-          %}
-        {% else %}
-          <div class="predictive-search-results__no-results">
-            <p>{{ 'content.no_products_found' | t }}</p>
+
+      {%- comment -%} Left column: Products {%- endcomment -%}
+      <div class="predictive-search-results__column-left">
+        {% paginate collection.products by 4 %}
+          {% assign products = collection.products %}
+          {% if products.size > 0 %}
+            {% render 'predictive-search-products-list',
+              products_test_id: products_test_id,
+              title: title,
+              products: products,
+              limit: 4
+            %}
+          {% else %}
+            <div class="predictive-search-results__no-results">
+              <p>{{ 'content.no_products_found' | t }}</p>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+
+      {%- comment -%} Right column: Popular Searches {%- endcomment -%}
+      <div class="predictive-search-results__column-right">
+        {% liquid
+          assign has_popular_searches = false
+          if settings.popular_search_1 != blank or settings.popular_search_2 != blank or settings.popular_search_3 != blank or settings.popular_search_4 != blank
+            assign has_popular_searches = true
+          endif
+        %}
+        {% if has_popular_searches %}
+          <div class="predictive-search-results__popular-searches">
+            <h3 class="predictive-search-results__sidebar-title">
+              {{ settings.popular_searches_heading | default: 'content.popular_searches' | t }}
+            </h3>
+            <ul class="predictive-search-results__popular-list list-unstyled">
+              {%- if settings.popular_search_1 != blank -%}
+                <li class="predictive-search-results__popular-item">
+                  <a
+                    href="{{ routes.search_url }}?q={{ settings.popular_search_1 | url_encode }}"
+                    class="predictive-search-results__popular-link"
+                  >
+                    <span class="svg-wrapper predictive-search-results__popular-icon">
+                      {{ 'icon-search.svg' | inline_asset_content }}
+                    </span>
+                    {{ settings.popular_search_1 }}
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if settings.popular_search_2 != blank -%}
+                <li class="predictive-search-results__popular-item">
+                  <a
+                    href="{{ routes.search_url }}?q={{ settings.popular_search_2 | url_encode }}"
+                    class="predictive-search-results__popular-link"
+                  >
+                    <span class="svg-wrapper predictive-search-results__popular-icon">
+                      {{ 'icon-search.svg' | inline_asset_content }}
+                    </span>
+                    {{ settings.popular_search_2 }}
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if settings.popular_search_3 != blank -%}
+                <li class="predictive-search-results__popular-item">
+                  <a
+                    href="{{ routes.search_url }}?q={{ settings.popular_search_3 | url_encode }}"
+                    class="predictive-search-results__popular-link"
+                  >
+                    <span class="svg-wrapper predictive-search-results__popular-icon">
+                      {{ 'icon-search.svg' | inline_asset_content }}
+                    </span>
+                    {{ settings.popular_search_3 }}
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if settings.popular_search_4 != blank -%}
+                <li class="predictive-search-results__popular-item">
+                  <a
+                    href="{{ routes.search_url }}?q={{ settings.popular_search_4 | url_encode }}"
+                    class="predictive-search-results__popular-link"
+                  >
+                    <span class="svg-wrapper predictive-search-results__popular-icon">
+                      {{ 'icon-search.svg' | inline_asset_content }}
+                    </span>
+                    {{ settings.popular_search_4 }}
+                  </a>
+                </li>
+              {%- endif -%}
+            </ul>
           </div>
         {% endif %}
-      {% endpaginate %}
+      </div>
     </div>
   {% endif %}
 </div>

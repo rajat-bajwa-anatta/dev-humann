@@ -62,43 +62,102 @@
         {% endif %}
 
         {%- if search_results_count > 0 -%}
-          {% if predictive_search.resources.products.size > 0 %}
-            {%- liquid
-              assign title = 'content.search_results_resource_products' | t
-              assign products = predictive_search.resources.products
-              render 'predictive-search-products-list', title: title, products: products
-            -%}
-          {% endif %}
+          <div class="predictive-search-results__columns">
+            {%- comment -%} Left column: Products + Collections {%- endcomment -%}
+            <div class="predictive-search-results__column-left">
+              {% if predictive_search.resources.products.size > 0 %}
+                {%- liquid
+                  assign title = 'content.search_results_resource_products' | t
+                  assign products = predictive_search.resources.products
+                  render 'predictive-search-products-list', title: title, products: products
+                -%}
+              {% endif %}
 
-          {% if predictive_search.resources.collections.size > 0 %}
-            {% assign resource_title = 'content.search_results_resource_collections' | t %}
+              {% if predictive_search.resources.collections.size > 0 %}
+                {% assign resource_title = 'content.search_results_resource_collections' | t %}
 
-            {% render 'predictive-search-resource-carousel',
-              title: resource_title,
-              resource_type: 'collection',
-              resources: predictive_search.resources.collections
-            %}
-          {% endif %}
+                {% render 'predictive-search-resource-carousel',
+                  title: resource_title,
+                  resource_type: 'collection',
+                  resources: predictive_search.resources.collections
+                %}
+              {% endif %}
+            </div>
 
-          {% if predictive_search.resources.pages.size > 0 %}
-            {% assign resource_title = 'content.search_results_resource_pages' | t %}
+            {%- comment -%} Right column: Knowledge Center (articles + pages) + View All {%- endcomment -%}
+            <div class="predictive-search-results__column-right">
+              {% if predictive_search.resources.articles.size > 0 %}
+                <div class="predictive-search-results__knowledge-section">
+                  <h3 class="predictive-search-results__sidebar-title">
+                    {{ 'content.knowledge_center' | t }}
+                  </h3>
+                  <ul class="predictive-search-results__article-list list-unstyled">
+                    {%- for article in predictive_search.resources.articles -%}
+                      <li class="predictive-search-results__article-card">
+                        <a
+                          href="{{ article.url }}"
+                          class="predictive-search-results__article-link"
+                          ref="resultsItems[]"
+                          on:keydown="/onSearchKeyDown"
+                        >
+                          <div class="predictive-search-results__article-image">
+                            {%- if article.image -%}
+                              {{
+                                article.image
+                                | image_url: width: article.image.width
+                                | image_tag:
+                                  sizes: '(min-width: 750px) 30vw, 80vw',
+                                  widths: '400,600,800,1000',
+                                  loading: 'lazy',
+                                  alt: article.image.alt
+                              }}
+                            {%- else -%}
+                              <div class="predictive-search-results__article-image-placeholder" aria-hidden="true"></div>
+                            {%- endif -%}
+                          </div>
+                          <div class="predictive-search-results__article-content">
+                            <div class="predictive-search-results__article-meta">
+                              {%- if article.tags.size > 0 -%}
+                                <span class="predictive-search-results__article-category">{{ article.tags.first }}</span>
+                                <span class="predictive-search-results__article-meta-separator" aria-hidden="true"></span>
+                              {%- endif -%}
+                              {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+                              {%- assign read_time = word_count | divided_by: 200 -%}
+                              {%- if read_time < 1 -%}
+                                {%- assign read_time = 1 -%}
+                              {%- endif -%}
+                              <span>{{ read_time }} min read</span>
+                            </div>
+                            <h4 class="predictive-search-results__article-title">{{ article.title }}</h4>
+                          </div>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {% endif %}
 
-            {% render 'predictive-search-resource-carousel',
-              title: resource_title,
-              resource_type: 'page',
-              resources: predictive_search.resources.pages
-            %}
-          {% endif %}
+              {% if predictive_search.resources.pages.size > 0 %}
+                {% assign resource_title = 'content.search_results_resource_pages' | t %}
 
-          {% if predictive_search.resources.articles.size > 0 %}
-            {% assign resource_title = 'content.search_results_resource_articles' | t %}
+                {% render 'predictive-search-resource-carousel',
+                  title: resource_title,
+                  resource_type: 'page',
+                  resources: predictive_search.resources.pages
+                %}
+              {% endif %}
 
-            {% render 'predictive-search-resource-carousel',
-              title: resource_title,
-              resource_type: 'article',
-              resources: predictive_search.resources.articles
-            %}
-          {% endif %}
+              {%- comment -%} View All Results button {%- endcomment -%}
+              <div class="predictive-search-results__view-all-wrapper">
+                <a
+                  href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
+                  class="predictive-search-results__view-all-link"
+                >
+                  {{ 'content.view_all_results' | t }}
+                </a>
+              </div>
+            </div>
+          </div>
         {%- elsif predictive_search.resources.queries.size == 0 -%}
           <p class="predictive-search-results__no-results">
             {{ 'content.search_results_no_results' | t: terms: predictive_search.terms }}
