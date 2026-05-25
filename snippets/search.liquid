@@ -14,7 +14,7 @@
     class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if class != blank %} {{ class | strip }}{% endif %}"
   >
     <button
-      on:click="#search-modal/showDialog"
+      on:click="#search-modal/toggleDialog"
       class="button-unstyled header-actions__action{% if display_style == 'text' %} header-actions__text-style{% endif %}"
       aria-label="{{ 'content.search_input_label' | t }}"
       aria-haspopup="dialog"
@@ -23,8 +23,11 @@
         {{ 'content.search' | t }}
       </span>
 
-      <span class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}">
+      <span class="svg-wrapper search-action__icon-search {% if display_style != 'icon' %}desktop:hidden{% endif %}">
         {{ 'icon-search.svg' | inline_asset_content }}
+      </span>
+      <span class="svg-wrapper search-action__icon-close {% if display_style != 'icon' %}desktop:hidden{% endif %}">
+        {{ 'icon-close.svg' | inline_asset_content }}
       </span>
     </button>
   </search-button>
@@ -74,5 +77,18 @@
     [data-menu-style='menu'] .header__column--left .search-action--text {
       margin-inline: 0;
     }
+  }
+
+  /* Search icon ↔ close icon toggle via body class */
+  .search-action__icon-close {
+    display: none;
+  }
+
+  body.search-dialog-open .search-action__icon-search {
+    display: none;
+  }
+
+  body.search-dialog-open .search-action__icon-close {
+    display: flex;
   }
 {% endstylesheet %}

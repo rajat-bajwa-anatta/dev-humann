@@ -51,7 +51,7 @@ class PredictiveSearchComponent extends Component {
     if (dialog) {
       document.addEventListener('keydown', this.#handleKeyboardShortcut, { signal });
       dialog.addEventListener(DialogCloseEvent.eventName, this.#handleDialogClose, { signal });
-      dialog.addEventListener(DialogOpenEvent.eventName, this.#handleDialogOpen, { signal, once: true });
+      dialog.addEventListener(DialogOpenEvent.eventName, this.#handleDialogOpen, { signal });
 
       this.addEventListener('click', this.#handleModalClick, { signal });
     }
@@ -87,6 +87,7 @@ class PredictiveSearchComponent extends Component {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    document.body.classList.remove('search-dialog-open');
     this.#controller.abort();
   }
 
@@ -104,6 +105,7 @@ class PredictiveSearchComponent extends Component {
    * Handles the dialog close event.
    */
   #handleDialogClose = () => {
+    document.body.classList.remove('search-dialog-open');
     this.#resetSearch();
   };
 
@@ -111,6 +113,10 @@ class PredictiveSearchComponent extends Component {
     if (!this.#emptyStateLoaded && RecentlyViewed.getProducts().length > 0) {
       this.#loadEmptyState();
     }
+    document.body.classList.add('search-dialog-open');
+    requestAnimationFrame(() => {
+      this.refs.searchInput?.focus();
+    });
   };
 
   /**
