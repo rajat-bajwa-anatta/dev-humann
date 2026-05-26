@@ -1,0 +1,300 @@
+{% liquid
+  assign logo_image = section.settings.logo_image
+  assign tagline = section.settings.tagline
+  assign text_color = section.settings.text_color
+  assign chew_image = section.settings.chew_image
+  assign capsule_image = section.settings.capsule_image
+  assign gummie_image = section.settings.gummie_image
+%}
+
+<div
+  class="humann-prefooter spacing-style"
+  style="
+    --prefooter-text-color: {{ text_color }};
+    {% render 'spacing-style', settings: section.settings %}
+  "
+>
+  <div class="humann-prefooter__inner">
+    {% if logo_image %}
+      <div class="humann-prefooter__logo">
+        {{
+          logo_image
+          | image_url: width: logo_image.width
+          | image_tag:
+            sizes: '(min-width: 750px) 280px, 280px',
+            widths: '280,560',
+            loading: 'lazy',
+            alt: logo_image.alt | default: shop.name,
+            class: 'humann-prefooter__logo-img'
+        }}
+      </div>
+    {% else %}
+      <div class="humann-prefooter__logo">
+        <img
+          src="{{ 'logo.svg' | asset_url }}"
+          alt="{{ shop.name }}"
+          class="humann-prefooter__logo-img"
+          width="280"
+          height="48"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
+
+    {% if tagline != blank %}
+      <div class="humann-prefooter__tagline">
+        {% if chew_image %}
+          {% capture chew_html %}
+            <span class="humann-prefooter__inline-img humann-prefooter__inline-img--chew">
+              {{
+                chew_image
+                | image_url: width: chew_image.width
+                | image_tag:
+                  widths: '28,56',
+                  loading: 'lazy',
+                  alt: 'Chew',
+                  class: 'humann-prefooter__product-img'
+              }}
+            </span>
+          {% endcapture %}
+        {% endif %}
+
+        {% if capsule_image %}
+          {% capture capsule_html %}
+            <span class="humann-prefooter__inline-img humann-prefooter__inline-img--capsule">
+              {{
+                capsule_image
+                | image_url: width: capsule_image.width
+                | image_tag:
+                  widths: '44,88',
+                  loading: 'lazy',
+                  alt: 'Capsule',
+                  class: 'humann-prefooter__product-img humann-prefooter__product-img--capsule'
+              }}
+            </span>
+          {% endcapture %}
+        {% endif %}
+
+        {% if gummie_image %}
+          {% capture gummie_html %}
+            <span class="humann-prefooter__inline-img humann-prefooter__inline-img--gummie">
+              {{
+                gummie_image
+                | image_url: width: gummie_image.width
+                | image_tag:
+                  widths: '23,46',
+                  loading: 'lazy',
+                  alt: 'Gummie',
+                  class: 'humann-prefooter__product-img'
+              }}
+            </span>
+          {% endcapture %}
+        {% endif %}
+
+        {% assign tagline_with_chew = tagline | replace: '[chew]', chew_html %}
+        {% assign tagline_with_capsule = tagline_with_chew | replace: '[capsule]', capsule_html %}
+        {% assign tagline_final = tagline_with_capsule | replace: '[gummie]', gummie_html %}
+
+        <div class="humann-prefooter__tagline-text">
+          {{ tagline_final }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .humann-prefooter {
+    background-color: #ffffff;
+    border: 1px solid #D9D9DB;
+  }
+
+  .humann-prefooter__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    align-items: center;
+    max-width: 780px;
+    margin-inline: auto;
+  }
+
+  .humann-prefooter__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .humann-prefooter__logo-img {
+    width: 280px;
+    height: auto;
+  }
+
+  .humann-prefooter__tagline {
+    width: 100%;
+  }
+
+  .humann-prefooter__tagline-text {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-custom-heading);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -1px;
+    color: var(--prefooter-text-color, #BC0F0F);
+    text-align: center;
+  }
+
+  .humann-prefooter__tagline-text strong {
+    font-family: var(--font-custom-body);
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .humann-prefooter__inline-img {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .humann-prefooter__inline-img--chew {
+    padding: 3px 4px 0 4px;
+  }
+
+  .humann-prefooter__inline-img--capsule {
+    padding: 8px 4px 0 4px;
+  }
+
+  .humann-prefooter__inline-img--gummie {
+    padding: 2px 2px 0 2px;
+  }
+
+  .humann-prefooter__product-img {
+    display: block;
+    height: auto;
+  }
+
+  .humann-prefooter__inline-img--chew .humann-prefooter__product-img {
+    width: 28px;
+  }
+
+  .humann-prefooter__inline-img--capsule .humann-prefooter__product-img {
+    width: 44px;
+    transform: rotate(1.6deg);
+  }
+
+  .humann-prefooter__inline-img--gummie .humann-prefooter__product-img {
+    width: 23px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .humann-prefooter__inner {
+      gap: 60px;
+    }
+
+    .humann-prefooter__tagline-text {
+      gap: 2px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.humann_prefooter",
+  "tag": "section",
+  "class": "humann-prefooter-section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "t:settings.logo_image"
+    },
+    {
+      "type": "richtext",
+      "id": "tagline",
+      "label": "t:settings.tagline",
+      "default": "<p>A cardiovascular health company [chew] focused on the <strong>60,000 miles</strong> of your cardiovascular system [capsule] fueling your [gummie] <strong>36 trillion</strong></p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "default": "#BC0F0F"
+    },
+    {
+      "type": "header",
+      "content": "t:content.images"
+    },
+    {
+      "type": "image_picker",
+      "id": "chew_image",
+      "label": "t:settings.chew_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "capsule_image",
+      "label": "t:settings.capsule_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "gummie_image",
+      "label": "t:settings.gummie_image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.humann_prefooter"
+    }
+  ]
+}
+{% endschema %}
