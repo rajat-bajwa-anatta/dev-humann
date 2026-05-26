@@ -16,6 +16,9 @@
       "settings": {
         "tagline": "<p>A cardiovascular health company [chew] focused on the <strong>60,000 miles</strong> of your cardiovascular system [capsule] fueling your [gummie] <strong>36 trillion</strong></p>",
         "text_color": "#BC0F0F",
+        "chew_image": "shopify://shop_images/screenshot-2026-04-17-at-22-12-53-1-mobile-33031669.png",
+        "capsule_image": "shopify://shop_images/screenshot-2026-04-17-at-22-17-40-1-mobile-33031680.png",
+        "gummie_image": "shopify://shop_images/screenshot-2026-04-17-at-22-30-25-1-mobile-33031684.png",
         "padding-block-start": 72,
         "padding-block-end": 72,
         "padding-inline-start": 20,
