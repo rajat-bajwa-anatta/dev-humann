@@ -472,6 +472,7 @@
 
     .humann-footer__menus {
       order: 0;
+      border-top: 1px solid #D9D9DB;
     }
 
     .humann-footer__contact {
@@ -490,6 +491,61 @@
 
     .humann-footer__disclaimer-box {
       border-color: #A0A0A0;
+    }
+
+    /* ===== Mobile accordion menu styles ===== */
+
+    /* Bottom border below each menu block */
+    .humann-footer__menu-col .menu__details {
+      border-bottom: 1px solid #D9D9DB;
+    }
+
+    /* Summary row: flex with icon pushed right, styled per Figma */
+    .humann-footer__menu-col .menu__details > summary {
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-custom-body);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      color: #414141;
+    }
+
+    .humann-footer__menu-col .menu__details > summary::marker,
+    .humann-footer__menu-col .menu__details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Override accordion icon size to 20px per Figma */
+    .humann-footer__menu-col .menu__heading__toggle.svg-wrapper {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Reliable content hide/show — overrides animation CSS for footer context */
+    .humann-footer__menu-col .menu__details:not([open]) .details-content {
+      display: none;
+    }
+
+    .humann-footer__menu-col .menu__details[open] .details-content {
+      display: block;
+      opacity: 1;
+      block-size: auto;
+      overflow: visible;
+      padding-bottom: 16px;
+    }
+
+    /* Menu item spacing inside open accordion */
+    .humann-footer__menu-col .menu__item {
+      margin-block-start: 12px;
+    }
+
+    .humann-footer__menu-col .menu__item:first-child {
+      margin-block-start: 0;
     }
   }
 {% endstylesheet %}
