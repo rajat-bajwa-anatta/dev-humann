@@ -550,6 +550,25 @@
   }
 {% endstylesheet %}
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var footerMenus = document.querySelector('.humann-footer__menus');
+    if (!footerMenus) return;
+
+    footerMenus.addEventListener('click', function(e) {
+      if (window.innerWidth >= 750) return;
+      var summary = e.target.closest('.menu__details > summary');
+      if (!summary) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var details = summary.closest('.menu__details');
+      if (details) {
+        details.open = !details.open;
+      }
+    }, true);
+  });
+</script>
+
 {% schema %}
 {
   "name": "t:names.humann_footer",
