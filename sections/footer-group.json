@@ -11,7 +11,7 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
-    "humann_prefooter": {
+    "humann_prefooter_3ahHT7": {
       "type": "humann-prefooter",
       "settings": {
         "tagline": "<p>A cardiovascular health company [chew] focused on the <strong>60,000 miles</strong> of your cardiovascular system [capsule] fueling your [gummie] <strong>36 trillion</strong></p>",
@@ -25,7 +25,7 @@
         "padding-inline-end": 20
       }
     },
-    "humann_footer": {
+    "humann_footer_6jKeUd": {
       "type": "footer",
       "settings": {
         "first_block_wide": true,
@@ -283,7 +283,7 @@
     }
   },
   "order": [
-    "humann_prefooter",
-    "humann_footer"
+    "humann_prefooter_3ahHT7",
+    "humann_footer_6jKeUd"
   ]
 }
