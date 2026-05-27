@@ -1,0 +1,63 @@
+{%- doc -%}
+  Custom Font Loading
+
+  Loads @font-face declarations for custom brand fonts:
+  - Stabil Grotesk (Medium 500, Bold 700)
+  - Moderat Serif (Regular 400)
+  - (K) Uniforma (Regular 400)
+
+  Sets CSS custom properties for easy reference in sections:
+  --font-custom-body, --font-custom-heading, --font-custom-accent
+
+  Must be rendered in layout/theme.liquid <head> AFTER theme-styles-variables
+  and color-schemes so these custom properties override theme defaults.
+
+  Font files (.woff2) must be uploaded to theme assets/ directory.
+
+  @example
+  {% render 'custom-fonts' %}
+{%- enddoc -%}
+
+<style>
+  /* Stabil Grotesk — Medium (500) */
+  @font-face {
+    font-family: 'Stabil Grotesk';
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url('{{ "StabilGrotesk-Medium.woff2" | asset_url }}') format('woff2');
+  }
+
+  /* Stabil Grotesk — Bold (700) */
+  @font-face {
+    font-family: 'Stabil Grotesk';
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url('{{ "StabilGrotesk-Bold.woff2" | asset_url }}') format('woff2');
+  }
+
+  /* Moderat Serif — Regular (400) */
+  @font-face {
+    font-family: 'Moderat Serif';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url('{{ "ModeratSerif-Regular.woff2" | asset_url }}') format('woff2');
+  }
+
+  /* (K) Uniforma — Regular (400) */
+  @font-face {
+    font-family: 'Uniforma';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url('{{ "Uniforma-Regular.woff2" | asset_url }}') format('woff2');
+  }
+
+  :root {
+    --font-custom-body: 'Stabil Grotesk', var(--font-body--family);
+    --font-custom-heading: 'Moderat Serif', var(--font-heading--family);
+    --font-custom-accent: 'Uniforma', var(--font-body--family);
+  }
+</style>

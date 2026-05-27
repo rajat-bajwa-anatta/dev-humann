@@ -1,0 +1,759 @@
+{% liquid
+  assign klaviyo_list_id = section.settings.klaviyo_list_id
+  assign newsletter_heading = section.settings.newsletter_heading
+  assign newsletter_subtitle = section.settings.newsletter_subtitle
+  assign newsletter_placeholder = section.settings.newsletter_placeholder
+  assign contact_address = section.settings.contact_address
+  assign contact_phone = section.settings.contact_phone
+  assign contact_email = section.settings.contact_email
+  assign button_1_label = section.settings.button_1_label
+  assign button_1_url = section.settings.button_1_url
+  assign button_2_label = section.settings.button_2_label
+  assign button_2_url = section.settings.button_2_url
+  assign disclaimer_content = section.settings.disclaimer_content
+  assign policy_menu = section.settings.policy_menu
+  assign copyright_text = section.settings.copyright_text
+  assign color_scheme = section.settings.color_scheme
+%}
+
+<div
+  class="humann-footer spacing-style {% if color_scheme != blank %}color-{{ color_scheme }}{% endif %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+  "
+>
+  <div class="humann-footer__main">
+    {%- comment -%} Left column: Newsletter + Social + Contact {%- endcomment -%}
+    <div class="humann-footer__left">
+      {%- comment -%} Newsletter {%- endcomment -%}
+      <div class="humann-footer__newsletter">
+        {% if newsletter_heading != blank %}
+          <h2 class="humann-footer__newsletter-heading">{{ newsletter_heading }}</h2>
+        {% endif %}
+        {% if newsletter_subtitle != blank %}
+          <p class="humann-footer__newsletter-subtitle">{{ newsletter_subtitle }}</p>
+        {% endif %}
+
+        <form
+          class="humann-footer__newsletter-form"
+          action="https://manage.kmail-lists.com/ajax/subscriptions/subscribe"
+          method="POST"
+          data-klaviyo-form
+        >
+          {% if klaviyo_list_id != blank %}
+            <input type="hidden" name="g" value="{{ klaviyo_list_id }}">
+          {% endif %}
+          <div class="humann-footer__newsletter-input-wrap">
+            <input
+              type="email"
+              name="email"
+              class="humann-footer__newsletter-input"
+              placeholder="{{ newsletter_placeholder | default: 'Enter your email' }}"
+              required
+              autocomplete="email"
+              aria-label="{{ newsletter_placeholder | default: 'Enter your email' }}"
+            >
+            <button type="submit" class="humann-footer__newsletter-submit" aria-label="{{ 'actions.sign_up' | t }}">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M4.167 10h11.666M10.833 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {%- comment -%} Social Links — static theme block {%- endcomment -%}
+      <div class="humann-footer__social">
+        {% content_for 'block', type: 'social-links', id: 'social' %}
+      </div>
+
+      {%- comment -%} Contact Info {%- endcomment -%}
+      {% if contact_address != blank or contact_phone != blank or contact_email != blank %}
+        <div class="humann-footer__contact">
+          {% if contact_address != blank %}
+            <p class="humann-footer__contact-text">{{ contact_address }}</p>
+          {% endif %}
+          {% if contact_phone != blank %}
+            <p class="humann-footer__contact-text">
+              <a href="tel:{{ contact_phone | remove: '(' | remove: ')' | remove: ' ' | remove: '-' }}">{{ contact_phone }}</a>
+            </p>
+          {% endif %}
+          {% if contact_email != blank %}
+            <p class="humann-footer__contact-text">
+              <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    {%- comment -%} Right columns: Navigation Menus {%- endcomment -%}
+    <div class="humann-footer__menus">
+      <div class="humann-footer__menu-col">
+        {% content_for 'block', type: 'menu', id: 'shop-menu' %}
+      </div>
+      <div class="humann-footer__menu-col">
+        {% content_for 'block', type: 'menu', id: 'learn-menu' %}
+      </div>
+      <div class="humann-footer__menu-col">
+        {% content_for 'block', type: 'menu', id: 'support-menu' %}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Bottom Area {%- endcomment -%}
+  <div class="humann-footer__bottom">
+    {%- comment -%} CTA Buttons {%- endcomment -%}
+    {% if button_1_label != blank or button_2_label != blank %}
+      <div class="humann-footer__buttons">
+        {% if button_1_label != blank %}
+          <a
+            href="{{ button_1_url | default: '#' }}"
+            class="humann-footer__cta-button"
+          >
+            {{ button_1_label }}
+          </a>
+        {% endif %}
+        {% if button_2_label != blank %}
+          <a
+            href="{{ button_2_url | default: '#' }}"
+            class="humann-footer__cta-button"
+          >
+            {{ button_2_label }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {%- comment -%} Disclaimer {%- endcomment -%}
+    {% if disclaimer_content != blank %}
+      <div class="humann-footer__disclaimer">
+        <div class="humann-footer__disclaimer-box">
+          {{ disclaimer_content }}
+        </div>
+      </div>
+    {% endif %}
+
+    {%- comment -%} Policy Links & Copyright {%- endcomment -%}
+    <div class="humann-footer__legal">
+      {% if policy_menu != blank %}
+        <div class="humann-footer__policies">
+          {% for link in policy_menu.links %}
+            {% if forloop.index > 1 %}
+              <span class="humann-footer__policy-separator">|</span>
+            {% endif %}
+            <a href="{{ link.url }}" class="humann-footer__policy-link">{{ link.title }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if copyright_text != blank %}
+        <p class="humann-footer__copyright">{{ copyright_text }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .humann-footer {
+    background-color: #F5F5F5;
+  }
+
+  .humann-footer__main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .humann-footer__left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .humann-footer__newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px;
+  }
+
+  .humann-footer__newsletter-heading {
+    font-family: var(--font-custom-body);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #414141;
+    margin: 0;
+  }
+
+  .humann-footer__newsletter-subtitle {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #767676;
+    margin: 0;
+    margin-block-start: -12px;
+  }
+
+  .humann-footer__newsletter-input-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #D9D9DB;
+    border-radius: 48px;
+    padding: 16px 24px;
+  }
+
+  .humann-footer__newsletter-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    color: #414141;
+    outline: none;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .humann-footer__newsletter-input::placeholder {
+    color: #767676;
+  }
+
+  .humann-footer__newsletter-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #000000;
+    width: 20px;
+    height: 20px;
+  }
+
+  .humann-footer__newsletter-submit:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .humann-footer__social {
+    padding: 16px;
+  }
+
+  .humann-footer__social .social-icons__wrapper {
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .humann-footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 8px;
+  }
+
+  .humann-footer__contact-text {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #414141;
+    margin: 0;
+    white-space: pre-line;
+  }
+
+  .humann-footer__contact-text a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .humann-footer__contact-text a:hover {
+    text-decoration: underline;
+  }
+
+  .humann-footer__menus {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .humann-footer__menu-col {
+    width: 100%;
+  }
+
+  .humann-footer__menu-col .menu__heading__default,
+  .humann-footer__menu-col .menu__heading__accordion {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #414141;
+  }
+
+  .humann-footer__menu-col .menu__item {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .humann-footer__menu-col .menu__item a {
+    color: #414141;
+    text-decoration: none;
+  }
+
+  .humann-footer__menu-col .menu__item a:hover {
+    text-decoration: underline;
+  }
+
+  /* Bottom area */
+  .humann-footer__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .humann-footer__buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+
+  .humann-footer__cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-custom-accent);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000000;
+    background-color: #ffffff;
+    border-radius: 28px;
+    padding: 16px 28px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .humann-footer__cta-button:hover {
+    opacity: 0.8;
+  }
+
+  .humann-footer__cta-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .humann-footer__disclaimer {
+    width: 100%;
+  }
+
+  .humann-footer__disclaimer-box {
+    border: 1px solid #D9D9DB;
+    border-radius: 4px;
+    padding: 16px;
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #767676;
+  }
+
+  .humann-footer__disclaimer-box p {
+    margin: 0;
+  }
+
+  .humann-footer__disclaimer-box p + p {
+    margin-block-start: 8px;
+  }
+
+  .humann-footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .humann-footer__policies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .humann-footer__policy-link {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #767676;
+    text-decoration: underline;
+  }
+
+  .humann-footer__policy-link:hover {
+    color: #414141;
+  }
+
+  .humann-footer__policy-separator {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #767676;
+  }
+
+  .humann-footer__copyright {
+    font-family: var(--font-custom-body);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #767676;
+    margin: 0;
+  }
+
+  /* Desktop layout */
+  @media screen and (min-width: 750px) {
+    .humann-footer__main {
+      flex-direction: row;
+    }
+
+    .humann-footer__left {
+      flex: 0 0 auto;
+      width: 42%;
+    }
+
+    .humann-footer__menus {
+      flex: 1;
+      flex-direction: row;
+      gap: 32px;
+    }
+
+    .humann-footer__menu-col {
+      flex: 1;
+    }
+
+    .humann-footer__social .social-icons__wrapper {
+      gap: 20px;
+    }
+
+    .humann-footer__contact {
+      padding: 16px 8px 16px 8px;
+    }
+  }
+
+  /* Mobile layout */
+  @media screen and (max-width: 749px) {
+    .humann-footer__main {
+      gap: 8px;
+    }
+
+    .humann-footer__left {
+      order: -1;
+    }
+
+    .humann-footer__social .social-icons__wrapper {
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .humann-footer__menus {
+      order: 0;
+      border-top: 1px solid #D9D9DB;
+    }
+
+    .humann-footer__contact {
+      order: 1;
+      color: #767676;
+    }
+
+    .humann-footer__contact-text {
+      color: #767676;
+    }
+
+    .humann-footer__cta-button {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+
+    .humann-footer__disclaimer-box {
+      border-color: #A0A0A0;
+    }
+
+    /* ===== Mobile accordion menu styles ===== */
+
+    /* Bottom border below each menu block */
+    .humann-footer__menu-col .menu__details {
+      border-bottom: 1px solid #D9D9DB;
+    }
+
+    /* Summary row: flex with icon pushed right, styled per Figma */
+    .humann-footer__menu-col .menu__details > summary {
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-custom-body);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      color: #414141;
+    }
+
+    .humann-footer__menu-col .menu__details > summary::marker,
+    .humann-footer__menu-col .menu__details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Override accordion icon size to 20px per Figma */
+    .humann-footer__menu-col .menu__heading__toggle.svg-wrapper {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Reliable content hide/show — overrides animation CSS for footer context */
+    .humann-footer__menu-col .menu__details:not([open]) .details-content {
+      display: none;
+    }
+
+    .humann-footer__menu-col .menu__details[open] .details-content {
+      display: block;
+      opacity: 1;
+      block-size: auto;
+      overflow: visible;
+      padding-bottom: 16px;
+    }
+
+    /* Menu item spacing inside open accordion */
+    .humann-footer__menu-col .menu__item {
+      margin-block-start: 12px;
+    }
+
+    .humann-footer__menu-col .menu__item:first-child {
+      margin-block-start: 0;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var footerMenus = document.querySelector('.humann-footer__menus');
+    if (!footerMenus) return;
+
+    footerMenus.addEventListener('click', function(e) {
+      if (window.innerWidth >= 750) return;
+      var summary = e.target.closest('.menu__details > summary');
+      if (!summary) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var details = summary.closest('.menu__details');
+      if (details) {
+        details.open = !details.open;
+      }
+    }, true);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:names.humann_footer",
+  "tag": "section",
+  "class": "humann-footer-section",
+  "blocks": [
+    {
+      "type": "menu"
+    },
+    {
+      "type": "social-links"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.email_signup"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "t:settings.klaviyo_list_id"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "t:settings.newsletter_heading",
+      "default": "Get 10% off when you sign up today."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtitle",
+      "label": "t:settings.newsletter_subtitle",
+      "default": "Humann science in your inbox"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "t:settings.newsletter_placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "header",
+      "content": "t:content.social_media"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.social_media_info"
+    },
+    {
+      "type": "header",
+      "content": "t:content.contact"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_address",
+      "label": "t:settings.contact_address",
+      "default": "1250 S Capital of Texas Highway\nAustin, TX 78746"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "t:settings.contact_phone",
+      "default": "(855) 636-4040"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "t:settings.contact_email",
+      "default": "info@humann.com"
+    },
+    {
+      "type": "header",
+      "content": "t:content.buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "t:settings.button_1_label",
+      "default": "Accessibility"
+    },
+    {
+      "type": "url",
+      "id": "button_1_url",
+      "label": "t:settings.button_1_url"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "t:settings.button_2_label",
+      "default": "Chat"
+    },
+    {
+      "type": "url",
+      "id": "button_2_url",
+      "label": "t:settings.button_2_url"
+    },
+    {
+      "type": "header",
+      "content": "t:settings.disclaimer_content"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer_content",
+      "label": "t:settings.disclaimer_content"
+    },
+    {
+      "type": "header",
+      "content": "t:content.policies"
+    },
+    {
+      "type": "link_list",
+      "id": "policy_menu",
+      "label": "t:settings.policy_menu"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "t:settings.copyright_text",
+      "default": "© 2025 Humann"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.humann_footer"
+    }
+  ]
+}
+{% endschema %}
