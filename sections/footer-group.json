@@ -26,30 +26,124 @@
       }
     },
     "humann_footer": {
-      "type": "humann-footer",
+      "type": "footer",
+      "settings": {
+        "first_block_wide": true,
+        "klaviyo_list_id": "",
+        "section_width": "page-width",
+        "gap": 32,
+        "color_scheme": "scheme-2",
+        "padding-block-start": 60,
+        "padding-block-end": 40
+      },
       "blocks": {
-        "social": {
-          "type": "social-links",
-          "static": true,
+        "left-col": {
+          "type": "group",
           "settings": {
-            "facebook_url": "https://www.facebook.com/HuMannHealth",
-            "instagram_url": "https://www.instagram.com/humann",
-            "youtube_url": "https://www.youtube.com/@HuMann",
-            "tiktok_url": "https://www.tiktok.com/@humann",
-            "twitter_url": "",
-            "threads_url": "",
-            "linkedin_url": "",
-            "bluesky_url": "",
-            "snapchat_url": "",
-            "pinterest_url": "",
-            "tumblr_url": "",
-            "vimeo_url": "",
-            "custom_url": ""
-          }
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "gap": 20,
+            "width": "fill",
+            "inherit_color_scheme": true
+          },
+          "blocks": {
+            "newsletter-heading": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Get 10% off when you sign up today.</p>",
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "h3"
+              }
+            },
+            "newsletter-subtitle": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Humann science in your inbox</p>",
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "rte"
+              }
+            },
+            "newsletter-form": {
+              "type": "email-signup",
+              "settings": {
+                "width": "fill",
+                "border_style": "none",
+                "border_radius": 100,
+                "integrated_button": true,
+                "display_type": "text",
+                "style_class": "button",
+                "label": "Subscribe"
+              }
+            },
+            "social-icons": {
+              "type": "social-links",
+              "settings": {
+                "facebook_url": "https://www.facebook.com/HuMannHealth",
+                "instagram_url": "https://www.instagram.com/humann",
+                "youtube_url": "https://www.youtube.com/@HuMann",
+                "tiktok_url": "https://www.tiktok.com/@humann",
+                "twitter_url": "",
+                "threads_url": "",
+                "linkedin_url": "",
+                "bluesky_url": "",
+                "snapchat_url": "",
+                "pinterest_url": "",
+                "tumblr_url": "",
+                "vimeo_url": "",
+                "custom_url": ""
+              }
+            },
+            "contact-info": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "gap": 6,
+                "width": "fill",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "address": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>1250 S Capital of Texas Highway<br>Austin, TX 78746</p>",
+                    "width": "100%",
+                    "alignment": "left",
+                    "type_preset": "rte"
+                  }
+                },
+                "phone": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>(855) 636-4040</p>",
+                    "width": "100%",
+                    "alignment": "left",
+                    "type_preset": "rte"
+                  }
+                },
+                "email": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>info@humann.com</p>",
+                    "width": "100%",
+                    "alignment": "left",
+                    "type_preset": "rte"
+                  }
+                }
+              },
+              "block_order": ["address", "phone", "email"]
+            }
+          },
+          "block_order": ["newsletter-heading", "newsletter-subtitle", "newsletter-form", "social-icons", "contact-info"]
         },
         "shop-menu": {
           "type": "menu",
-          "static": true,
           "settings": {
             "menu": "footer-shop",
             "heading": "Shop",
@@ -67,7 +161,6 @@
         },
         "learn-menu": {
           "type": "menu",
-          "static": true,
           "settings": {
             "menu": "footer-learn",
             "heading": "Learn",
@@ -85,7 +178,6 @@
         },
         "support-menu": {
           "type": "menu",
-          "static": true,
           "settings": {
             "menu": "footer-support",
             "heading": "Support",
@@ -100,25 +192,94 @@
             "padding-inline-start": 0,
             "padding-inline-end": 0
           }
+        },
+        "bottom-area": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "center",
+            "gap": 16,
+            "width": "fill",
+            "inherit_color_scheme": true
+          },
+          "blocks": {
+            "buttons-group": {
+              "type": "group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "gap": 12,
+                "width": "fit-content",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "btn-accessibility": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Accessibility",
+                    "style_class": "button-secondary"
+                  }
+                },
+                "btn-chat": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Chat",
+                    "style_class": "button-secondary"
+                  }
+                }
+              },
+              "block_order": ["btn-accessibility", "btn-chat"]
+            },
+            "disclaimer": {
+              "type": "text",
+              "settings": {
+                "text": "<p>These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
+                "width": "fill",
+                "alignment": "center",
+                "type_preset": "rte"
+              }
+            },
+            "policy-links": {
+              "type": "text",
+              "settings": {
+                "text": "<p><a href=\"/policies/privacy-policy\">Privacy Policy</a> | <a href=\"/policies/terms-of-service\">Terms of Service</a> | <a href=\"/policies/refund-policy\">Return Policy</a></p>",
+                "width": "fit-content",
+                "alignment": "right",
+                "type_preset": "rte"
+              }
+            },
+            "copyright": {
+              "type": "group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-end",
+                "vertical_alignment": "center",
+                "gap": 0,
+                "width": "fit-content",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "copyright-text": {
+                  "type": "footer-copyright",
+                  "settings": {
+                    "show_powered_by": false,
+                    "font_size": "14px",
+                    "case": "none"
+                  }
+                }
+              },
+              "block_order": ["copyright-text"]
+            }
+          },
+          "block_order": ["buttons-group", "disclaimer", "policy-links", "copyright"]
         }
       },
-      "settings": {
-        "klaviyo_list_id": "",
-        "newsletter_heading": "Get 10% off when you sign up today.",
-        "newsletter_subtitle": "Humann science in your inbox",
-        "newsletter_placeholder": "Enter your email",
-        "contact_address": "1250 S Capital of Texas Highway\nAustin, TX 78746",
-        "contact_phone": "(855) 636-4040",
-        "contact_email": "info@humann.com",
-        "button_1_label": "Accessibility",
-        "button_2_label": "Chat",
-        "copyright_text": "© 2025 Humann",
-        "color_scheme": "",
-        "padding-block-start": 40,
-        "padding-block-end": 60,
-        "padding-inline-start": 12,
-        "padding-inline-end": 12
-      }
+      "block_order": ["left-col", "shop-menu", "learn-menu", "support-menu", "bottom-area"]
     }
   },
   "order": [

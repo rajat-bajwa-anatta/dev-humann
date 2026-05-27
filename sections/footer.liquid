@@ -3,6 +3,7 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  data-section-id="{{ section.id }}"
 >
   {% liquid
     assign total_blocks = section.blocks.size
@@ -31,6 +32,7 @@
     class="
       footer-content
       spacing-style
+      {% if section.settings.first_block_wide %}footer-content--wide-first{% endif %}
       {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
       {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
     "
@@ -41,10 +43,34 @@
       --last-row-count: {{ last_row_count }};
       --tablet-last-row-count: {{ tablet_last_row_count }};
     "
+    {% if section.settings.klaviyo_list_id != blank %}data-klaviyo-list-id="{{ section.settings.klaviyo_list_id }}"{% endif %}
   >
     {% content_for 'blocks' %}
   </div>
 </div>
+
+<script>
+  (function () {
+    var footerContent = document.querySelector('[data-klaviyo-list-id]');
+    if (!footerContent) return;
+    var listId = footerContent.getAttribute('data-klaviyo-list-id');
+    if (!listId) return;
+
+    var form = footerContent.querySelector('form[action*="contact"]');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      var emailInput = form.querySelector('input[type="email"]');
+      if (!emailInput || !emailInput.value) return;
+
+      fetch('https://manage.kmail-lists.com/ajax/subscriptions/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'g=' + encodeURIComponent(listId) + '&email=' + encodeURIComponent(emailInput.value)
+      });
+    });
+  })();
+</script>
 
 {% stylesheet %}
   .footer-content {
@@ -73,6 +99,14 @@
     .footer-content--isolated-grid-item-tablet > :last-child {
       grid-column: 1 / -1;
     }
+
+    .footer-content--wide-first {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-content--wide-first > :last-child {
+      grid-column: 1 / -1;
+    }
   }
 
   @media screen and (min-width: 990px) {
@@ -88,6 +122,67 @@
     .footer-content--isolated-grid-item-desktop > :last-child {
       grid-column: 1 / -1;
     }
+
+    /* Wide-first: left col takes 2fr, remaining menu cols take 1fr each */
+    .footer-content--wide-first {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+
+    .footer-content--wide-first > :last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* ── Email pill styling ── */
+  .footer-content--wide-first .email-signup__input-group--integrated.email-signup__input-group--no-border {
+    background-color: #D9D9DB;
+    border-radius: 48px;
+    padding: 4px 4px 4px 20px;
+    overflow: hidden;
+  }
+
+  .footer-content--wide-first .email-signup__input-group--integrated.email-signup__input-group--no-border input[type='email'] {
+    background-color: transparent;
+    border: none;
+    padding-block: 10px;
+  }
+
+  .footer-content--wide-first .email-signup__input-group--integrated .email-signup__button {
+    border-radius: 48px;
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
+
+  /* ── Social icons: left-align in footer ── */
+  .footer-content--wide-first .social-icons__wrapper {
+    justify-content: flex-start;
+  }
+
+  /* ── Menu headings: correct font weight ── */
+  .footer-content--wide-first .menu__heading {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── Menu links ── */
+  .footer-content--wide-first .menu__list-item a {
+    font-size: 14px;
+    line-height: 1.6;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .footer-content--wide-first .menu__list-item a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Bottom bar: border-top separator ── */
+  .footer-content--wide-first > :last-child {
+    border-block-start: 1px solid currentColor;
+    padding-block-start: 20px;
+    opacity: 0.85;
   }
 {% endstylesheet %}
 
@@ -143,6 +238,18 @@
     "groups": ["footer"]
   },
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "first_block_wide",
+      "label": "Wide first column",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "Klaviyo list ID",
+      "info": "Enter your Klaviyo list ID to subscribe emails to that list alongside Shopify."
+    },
     {
       "type": "select",
       "id": "section_width",
